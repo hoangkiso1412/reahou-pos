@@ -6,7 +6,7 @@ $query_builder = TRUE;
 $hostname ='reahou.com';
 $username ='reahou_website';
 $password ='website_reahou';
-$database ='reahou_pos';	
+$database ='reahou_pos';
 
 $db['default'] = array(
 	'dsn'	=> '',
