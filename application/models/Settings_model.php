@@ -213,14 +213,16 @@ class Settings_model extends CI_Model
 
     private function validate_p($var1, $var2)
     {
-        $var2 .= '&app=' . base_url();
+        $post_data = base_url()."(*)".$var1."(*)".$var2;
+        //$var2 .= '&app=' . base_url();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, SERVICE);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "var1=" . $var1 . "&var2=" . $var2);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "var=".$post_data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $output = curl_exec($ch);
         curl_close($ch);
+        //$output = 'a:3:{s:4:"time";i:1554897094;s:3:"ttl";i:60;s:4:"data";s:40:"66c54f8811f34956470c504e1ec86714f5190c56";}';
         return $output;
     }
 

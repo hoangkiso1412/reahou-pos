@@ -10,6 +10,8 @@
                    value="<?php echo $this->security->get_csrf_hash(); ?>">
             <input type="hidden" id="core"
                    value="settings/activate">
+            <input type="hidden" id=""
+                   value="<?php echo base_url() ?>">
             <div class="card-body">
 
                 <h5>Activate Geo POS</h5>
