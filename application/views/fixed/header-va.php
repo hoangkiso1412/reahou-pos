@@ -127,8 +127,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading3" role="tab">
-                                                <a class=" text-uppercase black" data-toggle="collapse"
+                                            <div class="hidden card-header p-0 pb-1 border-0 mt-1 hidden" id="heading3" role="tab">
+                                                <a class="text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap" href="#accordion3"
                                                    aria-controls="accordion3"> <i
                                                             class="fa fa-lightbulb-o"></i><?php echo $this->lang->line('Miscellaneous') . ' ' . $this->lang->line('Settings') ?>
@@ -361,7 +361,7 @@
                                                                href="<?php echo base_url(); ?>plugins/recaptcha"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Security') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li><a class="hidden dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/tickets"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Support Tickets') ?>
                                                             </a></li>
@@ -631,7 +631,7 @@
                                             href="<?php echo base_url(); ?>invoices"><?php echo $this->lang->line('Manage Invoices'); ?></a>
                             </ul>
                         </li>
-                        <li class="menu-item"><a href="#"><i
+                        <li class="hidden menu-item"><a href="#"><i
                                         class="icon-call-out"></i><?php echo $this->lang->line('Quotes') ?></a>
                             <ul class="menu-content">
                                 <li class="menu-item"><a
@@ -643,7 +643,7 @@
                             </ul>
                         </li>
 
-                        <li class="menu-item"><a href="#"><i
+                        <li class="hidden menu-item"><a href="#"><i
                                         class="ft-radio"></i><?php echo $this->lang->line('Subscriptions') ?></a>
                             <ul class="menu-content">
                                 <li class="menu-item"><a
@@ -762,7 +762,7 @@
                             <a href="<?php echo base_url(); ?>clientgroup"><i
                                         class="icon-grid"></i> <?php echo $this->lang->line('Client Groups'); ?></a>
                         </li>
-                        <li class="menu-item"><a href="#"><i
+                        <li class="hidden menu-item"><a href="#"><i
                                         class="fa fa-ticket"></i> <?php echo $this->lang->line('Support Tickets') ?></a>
                             <ul class="menu-content">
                                 <li class="menu-item"><a
@@ -779,7 +779,7 @@
             <?php }
             if ($this->aauth->premission(4)) {
                 ?>
-                <li class="menu-item  has-sub <?php if ($this->li_a == "project") {
+                <li class="hidden menu-item  has-sub <?php if ($this->li_a == "project") {
                     echo ' open';
                 } ?>"><a href="#"><i
                                 class="icon-briefcase"></i><span><?= $this->lang->line('Project') ?></span></a>
@@ -993,7 +993,7 @@
             <?php }
             if ($this->aauth->premission(6)) {
                 ?>
-                <li class="menu-item  has-sub <?php if ($this->li_a == "misc") {
+                <li class="hidden menu-item  has-sub <?php if ($this->li_a == "misc") {
                     echo ' open';
                 } ?>"><a href="#"><i
                                 class="icon-note"></i><span><?php echo $this->lang->line('Miscellaneous') ?></span></a>

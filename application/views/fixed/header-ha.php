@@ -135,7 +135,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading3" role="tab">
+                                            <div class="hidden card-header p-0 pb-1 border-0 mt-1" id="heading3" role="tab">
                                                 <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap" href="#accordion3"
                                                    aria-controls="accordion3"> <i
@@ -369,7 +369,7 @@
                                                                href="<?php echo base_url(); ?>plugins/recaptcha"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Security') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li><a class="hidden dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/tickets"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Support Tickets') ?>
                                                             </a></li>
@@ -628,7 +628,7 @@
                                                     data-toggle="dropdown"><?php echo $this->lang->line('Manage Invoices'); ?></a>
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                        <li class="hidden dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="icon-call-out"></i><?php echo $this->lang->line('Quotes') ?></a>
                             <ul class="dropdown-menu">
@@ -641,7 +641,7 @@
                             </ul>
                         </li>
 
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                        <li class="hidden dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="ft-radio"></i><?php echo $this->lang->line('Subscriptions') ?></a>
                             <ul class="dropdown-menu">
@@ -772,7 +772,7 @@
                             <a class="dropdown-item" href="<?php echo base_url(); ?>clientgroup"><i
                                         class="icon-grid"></i><?php echo $this->lang->line('Client Groups'); ?></a>
                         </li>
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                        <li class="hidden dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="fa fa-ticket"></i><?php echo $this->lang->line('Support Tickets') ?></a>
                             <ul class="dropdown-menu">
@@ -791,7 +791,7 @@
             <?php }
             if ($this->aauth->premission(4)) {
                 ?>
-                <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
+                <li class="hidden dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
                                                                       data-toggle="dropdown"><i
                                 class="icon-briefcase"></i><span><?= $this->lang->line('Project') ?></span></a>
                     <ul class="dropdown-menu">
@@ -1033,7 +1033,7 @@
             <?php }
             if ($this->aauth->premission(6)) {
                 ?>
-                <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
+                <li class="hidden dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
                                                                       data-toggle="dropdown"><i
                                 class="icon-note"></i><span><?php echo $this->lang->line('Miscellaneous') ?></span></a>
                     <ul class="dropdown-menu">
