@@ -3,3 +3,8 @@ application/config/lic.php
 application/cache/cache_validation
 application/config/lic.php
 application/cache/cache_validation
+/nbproject/private/
+nbproject/project.properties
+nbproject/project.xml
+application/cache/cache_validation
+application/cache/cache_validation
