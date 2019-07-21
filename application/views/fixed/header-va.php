@@ -179,19 +179,19 @@
                                                  aria-labelledby="heading4" aria-expanded="true">
                                                 <div class="card-content">
                                                     <ul>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>restapi"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('REST API') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>cronjob"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Automatic Corn Job') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/custom_fields"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Custom') ?> <?php echo $this->lang->line('Fields') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/dual_entry"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Dual Entry') . ' ' . $this->lang->line('Accounting') ?>
                                                             </a></li>
@@ -200,7 +200,7 @@
                                                                         class="ft-chevron-right"></i> Application
                                                                 Activity Log</a>
                                                         </li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/debug"><i
                                                                         class="ft-chevron-right"></i> Debug Mode </a>
                                                         </li>
