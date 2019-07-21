@@ -46,7 +46,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item d-none d-md-block nav-link "><a href="<?= base_url() ?>pos_invoices/create"
+                    <li class="nav-item d-none d-md-block nav-link hidden"><a href="<?= base_url() ?>pos_invoices/create"
                                                                         class="btn btn-info btn-md t_tooltip"
                                                                         title="Access POS"><i
                                     class="icon-handbag"></i><?php echo $this->lang->line('POS') ?> </a>
@@ -135,13 +135,13 @@
                                                 </div>
                                             </div>
 
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading3" role="tab">
+                                            <div class="hidden card-header p-0 pb-1 border-0 mt-1" id="heading3" role="tab">
                                                 <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap" href="#accordion3"
                                                    aria-controls="accordion3"> <i
                                                             class="fa fa-lightbulb-o"></i><?php echo $this->lang->line('Miscellaneous') . ' ' . $this->lang->line('Settings') ?>
                                                 </a></div>
-                                            <div class="card-collapse collapse mb-1 " id="accordion3" role="tabpanel"
+                                            <div class="hidden card-collapse collapse mb-1 " id="accordion3" role="tabpanel"
                                                  aria-labelledby="heading3" aria-expanded="true">
                                                 <div class="card-content">
                                                     <ul>
@@ -237,7 +237,7 @@
                                                                href="<?php echo base_url(); ?>settings/billing_terms"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Billing Terms') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/automail"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Auto Email SMS') ?>
                                                             </a></li>
@@ -249,7 +249,7 @@
                                                                href="<?php echo base_url(); ?>settings/zero_stock"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Zero Stock') . ' ' . $this->lang->line('Billing') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/pos_style"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('POS') . ' ' . $this->lang->line('Style') ?>
                                                             </a></li>
@@ -301,11 +301,11 @@
                                                                href="<?php echo base_url(); ?>units"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Measurement Unit') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>units/variations"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Products') . ' ' . $this->lang->line('Variations') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>units/variables"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Variations') . ' ' . $this->lang->line('Variables') ?>
                                                             </a></li>
@@ -326,7 +326,7 @@
                                                                href="<?php echo base_url(); ?>paymentgateways/settings"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Payment Settings') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>paymentgateways"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Payment Gateways') ?>
                                                             </a></li>
@@ -346,7 +346,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading9" role="tab">
+                                            <div class="card-header p-0 pb-1 border-0 mt-1 hidden" id="heading9" role="tab">
                                                 <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap2" href="#accordion9"
                                                    aria-controls="accordion9"><i
@@ -387,7 +387,7 @@
 
                                     <div id="accordionWrap3" role="tablist" aria-multiselectable="true">
                                         <div class="card border-0 box-shadow-0 collapse-icon accordion-icon-rotate">
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading10" role="tab">
+                                            <div class="card-header p-0 pb-1 border-0 mt-1 hidden" id="heading10" role="tab">
                                                 <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap3" href="#accordion10"
                                                    aria-controls="accordion10"><i
@@ -417,7 +417,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading11" role="tab">
+                                            <div class="card-header p-0 pb-1 border-0 mt-1 hidden" id="heading11" role="tab">
                                                 <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap3" href="#accordion11"
                                                    aria-controls="accordion11"> <i
@@ -628,7 +628,7 @@
                                                     data-toggle="dropdown"><?php echo $this->lang->line('Manage Invoices'); ?></a>
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                        <li class="hidden dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="icon-call-out"></i><?php echo $this->lang->line('Quotes') ?></a>
                             <ul class="dropdown-menu">
@@ -641,7 +641,7 @@
                             </ul>
                         </li>
 
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                        <li class="hidden dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="ft-radio"></i><?php echo $this->lang->line('Subscriptions') ?></a>
                             <ul class="dropdown-menu">
@@ -772,7 +772,7 @@
                             <a class="dropdown-item" href="<?php echo base_url(); ?>clientgroup"><i
                                         class="icon-grid"></i><?php echo $this->lang->line('Client Groups'); ?></a>
                         </li>
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                        <li class="hidden dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="fa fa-ticket"></i><?php echo $this->lang->line('Support Tickets') ?></a>
                             <ul class="dropdown-menu">
@@ -791,7 +791,7 @@
             <?php }
             if ($this->aauth->premission(4)) {
                 ?>
-                <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
+                <li class="hidden dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
                                                                       data-toggle="dropdown"><i
                                 class="icon-briefcase"></i><span><?= $this->lang->line('Project') ?></span></a>
                     <ul class="dropdown-menu">
@@ -1033,7 +1033,7 @@
             <?php }
             if ($this->aauth->premission(6)) {
                 ?>
-                <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
+                <li class="hidden dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
                                                                       data-toggle="dropdown"><i
                                 class="icon-note"></i><span><?php echo $this->lang->line('Miscellaneous') ?></span></a>
                     <ul class="dropdown-menu">
