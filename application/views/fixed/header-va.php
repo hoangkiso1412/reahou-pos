@@ -29,7 +29,7 @@
                                                               href="#"><i class="ft-menu"></i></a></li>
 
 
-                    <li class="dropdown  nav-item"><a class="nav-link nav-link-label" href="#"
+                    <li class="dropdown  nav-item hidden"><a class="nav-link nav-link-label" href="#"
                                                       data-toggle="dropdown"><i
                                     class="ficon ft-map-pin success"></i></a>
                         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-left">
@@ -87,11 +87,11 @@
                                                                href="<?php echo base_url(); ?>settings/company"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Company') . ' ' . $this->lang->line('Settings') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li><a class="dropdown-item hidden"
                                                                href="<?php echo base_url(); ?>locations"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Business Locations') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>tools/setgoals"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Set Goals') ?>
                                                             </a></li>
@@ -127,8 +127,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="hidden card-header p-0 pb-1 border-0 mt-1 hidden" id="heading3" role="tab">
-                                                <a class="text-uppercase black" data-toggle="collapse"
+                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading3" role="tab">
+                                                <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap" href="#accordion3"
                                                    aria-controls="accordion3"> <i
                                                             class="fa fa-lightbulb-o"></i><?php echo $this->lang->line('Miscellaneous') . ' ' . $this->lang->line('Settings') ?>
@@ -137,7 +137,7 @@
                                                  aria-labelledby="heading3" aria-expanded="true">
                                                 <div class="card-content">
                                                     <ul>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>webupdate"><i
                                                                         class="ft-chevron-right"></i> Software
                                                                 Update</a></li>
@@ -149,7 +149,7 @@
                                                                href="<?php echo base_url(); ?>transactions/categories"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Transaction Categories') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/misc_automail"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Email') . ' ' . $this->lang->line('Alert') ?>
                                                             </a></li>
@@ -361,7 +361,7 @@
                                                                href="<?php echo base_url(); ?>plugins/recaptcha"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Security') ?>
                                                             </a></li>
-                                                        <li><a class="hidden dropdown-item"
+                                                        <li><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/tickets"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Support Tickets') ?>
                                                             </a></li>
@@ -468,7 +468,7 @@
 
                             </ul>
                         </li>       <?php } ?>
-                    <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#"
+                    <li class="dropdown dropdown-notification nav-item hidden"><a class="nav-link nav-link-label" href="#"
                                                                            data-toggle="dropdown"><i
                                     class="ficon ft-bell"></i><span
                                     class="badge badge-pill badge-default badge-danger badge-default badge-up"
@@ -486,7 +486,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#"
+                    <li class="dropdown dropdown-notification nav-item hidden"><a class="nav-link nav-link-label" href="#"
                                                                            data-toggle="dropdown"><i
                                     class="ficon ft-mail"></i><span
                                     class="badge badge-pill badge-default badge-info badge-default badge-up"><?php echo $this->aauth->count_unread_pms() ?></span></a>
@@ -518,7 +518,7 @@
                         </ul>
                     </li>
                     <?php if ($this->aauth->auto_attend()) { ?>
-                        <li class="dropdown dropdown-d nav-item">
+                        <li class="dropdown dropdown-d nav-item hidden">
 
 
                             <?php if ($this->aauth->clock()) {
@@ -555,10 +555,10 @@
                                                                           href="<?php echo base_url(); ?>user/profile"><i
                                         class="ft-user"></i> <?php echo $this->lang->line('Profile') ?></a>
                             <a href="<?php echo base_url(); ?>user/attendance"
-                               class="dropdown-item"><i
+                               class="dropdown-item hidden"><i
                                         class="fa fa-list-ol"></i><?php echo $this->lang->line('Attendance') ?></a>
                             <a href="<?php echo base_url(); ?>user/holidays"
-                               class="dropdown-item"><i
+                               class="dropdown-item hidden"><i
                                         class="fa fa-hotel"></i><?php echo $this->lang->line('Holidays') ?></a>
 
                             <div class="dropdown-divider"></div>
@@ -631,7 +631,7 @@
                                             href="<?php echo base_url(); ?>invoices"><?php echo $this->lang->line('Manage Invoices'); ?></a>
                             </ul>
                         </li>
-                        <li class="hidden menu-item"><a href="#"><i
+                        <li class="menu-item"><a href="#"><i
                                         class="icon-call-out"></i><?php echo $this->lang->line('Quotes') ?></a>
                             <ul class="menu-content">
                                 <li class="menu-item"><a
@@ -643,7 +643,7 @@
                             </ul>
                         </li>
 
-                        <li class="hidden menu-item"><a href="#"><i
+                        <li class="menu-item"><a href="#"><i
                                         class="ft-radio"></i><?php echo $this->lang->line('Subscriptions') ?></a>
                             <ul class="menu-content">
                                 <li class="menu-item"><a
@@ -762,7 +762,7 @@
                             <a href="<?php echo base_url(); ?>clientgroup"><i
                                         class="icon-grid"></i> <?php echo $this->lang->line('Client Groups'); ?></a>
                         </li>
-                        <li class="hidden menu-item"><a href="#"><i
+                        <li class="menu-item"><a href="#"><i
                                         class="fa fa-ticket"></i> <?php echo $this->lang->line('Support Tickets') ?></a>
                             <ul class="menu-content">
                                 <li class="menu-item"><a
@@ -779,7 +779,7 @@
             <?php }
             if ($this->aauth->premission(4)) {
                 ?>
-                <li class="hidden menu-item  has-sub <?php if ($this->li_a == "project") {
+                <li class="menu-item  has-sub <?php if ($this->li_a == "project") {
                     echo ' open';
                 } ?>"><a href="#"><i
                                 class="icon-briefcase"></i><span><?= $this->lang->line('Project') ?></span></a>
@@ -872,7 +872,7 @@
                     </ul>
                 </li>
 
-                <li class="menu-item  has-sub <?php if ($this->li_a == "promo") {
+                <li class="menu-item hidden  has-sub <?php if ($this->li_a == "promo") {
                     echo ' open';
                 } ?>"><a href="#"><i
                                 class="icon-energy"></i> <span><?php echo $this->lang->line('Promo Codes') ?></span></a>
@@ -993,7 +993,7 @@
             <?php }
             if ($this->aauth->premission(6)) {
                 ?>
-                <li class="hidden menu-item  has-sub <?php if ($this->li_a == "misc") {
+                <li class="menu-item  has-sub <?php if ($this->li_a == "misc") {
                     echo ' open';
                 } ?>"><a href="#"><i
                                 class="icon-note"></i><span><?php echo $this->lang->line('Miscellaneous') ?></span></a>
@@ -1031,13 +1031,13 @@
                             <li class="menu-item"><a
                                         href="<?php echo base_url(); ?>employee/permissions"><?= $this->lang->line('Permissions'); ?></a>
                             </li>
-                            <li class="menu-item"><a
+                            <li class="menu-item hidden"><a
                                         href="<?php echo base_url(); ?>employee/salaries"><?= $this->lang->line('Salaries'); ?></a>
                             </li>
-                            <li class="menu-item"><a
+                            <li class="menu-item hidden"><a
                                         href="<?php echo base_url(); ?>employee/attendances"><?= $this->lang->line('Attendance'); ?></a>
                             </li>
-                            <li class="menu-item"><a
+                            <li class="menu-item hidden"><a
                                         href="<?php echo base_url(); ?>employee/holidays"><?= $this->lang->line('Holidays'); ?></a>
                             </li>
                         </ul>
@@ -1046,7 +1046,7 @@
                         <a href="<?php echo base_url(); ?>employee/departments"><i
                                     class="icon-folder"></i> <?php echo $this->lang->line('Departments'); ?></a>
                     </li>
-                    <li class="menu-item">
+                    <li class="menu-item hidden">
                         <a href="<?php echo base_url(); ?>employee/payroll"><i
                                     class="icon-notebook"></i> <?php echo $this->lang->line('Payroll'); ?></a>
                     </li>
