@@ -47,7 +47,7 @@
 
                         </ul>
                     </li>
-                    <li class="nav-item d-none d-md-block nav-link "><a href="<?= base_url() ?>pos_invoices/create"
+                    <li class="nav-item d-none d-md-block nav-link hidden"><a href="<?= base_url() ?>pos_invoices/create"
                                                                         class="btn btn-info btn-md t_tooltip"
                                                                         title="Access POS"><i
                                     class="icon-handbag"></i><?php echo $this->lang->line('POS') ?> </a>
@@ -241,7 +241,7 @@
                                                                href="<?php echo base_url(); ?>settings/zero_stock"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Zero Stock') . ' ' . $this->lang->line('Billing') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/pos_style"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('POS') . ' ' . $this->lang->line('Style') ?>
                                                             </a></li>
@@ -293,11 +293,11 @@
                                                                href="<?php echo base_url(); ?>units"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Measurement Unit') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>units/variations"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Products') . ' ' . $this->lang->line('Variations') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>units/variables"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Variations') . ' ' . $this->lang->line('Variables') ?>
                                                             </a></li>
@@ -318,7 +318,7 @@
                                                                href="<?php echo base_url(); ?>paymentgateways/settings"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Payment Settings') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>paymentgateways"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Payment Gateways') ?>
                                                             </a></li>
@@ -338,7 +338,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading9" role="tab">
+                                            <div class="card-header p-0 pb-1 border-0 mt-1 hidden" id="heading9" role="tab">
                                                 <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap2" href="#accordion9"
                                                    aria-controls="accordion9"><i
@@ -379,7 +379,7 @@
 
                                     <div id="accordionWrap3" role="tablist" aria-multiselectable="true">
                                         <div class="card border-0 box-shadow-0 collapse-icon accordion-icon-rotate">
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading10" role="tab">
+                                            <div class="card-header p-0 pb-1 border-0 mt-1 hidden" id="heading10" role="tab">
                                                 <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap3" href="#accordion10"
                                                    aria-controls="accordion10"><i
@@ -409,7 +409,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="card-header p-0 pb-1 border-0 mt-1" id="heading11" role="tab">
+                                            <div class="card-header p-0 pb-1 border-0 mt-1 hidden" id="heading11" role="tab">
                                                 <a class=" text-uppercase black" data-toggle="collapse"
                                                    data-parent="#accordionWrap3" href="#accordion11"
                                                    aria-controls="accordion11"> <i
