@@ -599,7 +599,7 @@
                                                                       data-toggle="dropdown"><i
                                 class="icon-basket-loaded"></i><span><?php echo $this->lang->line('sales') ?></span></a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                        <li class="dropdown dropdown-submenu hidden" data-menu="dropdown-submenu"><a
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="icon-paper-plane"></i><?php echo $this->lang->line('pos sales') ?></a>
                             <ul class="dropdown-menu">
