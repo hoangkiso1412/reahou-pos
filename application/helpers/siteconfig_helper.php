@@ -154,7 +154,7 @@ function amountFormat_s($number)
 
 }
 
-function amountFormat_general($number)
+function amountFormat_general($number,$isint=false)
 {
     $ci =& get_instance();
     $ci->load->database();
@@ -162,7 +162,13 @@ function amountFormat_general($number)
     $query2 = $ci->db->query("SELECT * FROM univarsal_api WHERE id=4 LIMIT 1");
     $row = $query2->row_array();
     //Format money as per country
-    $number = @number_format($number, $row['url'], $row['key1'], '');
+    if($isint){
+        $number = @number_format($number, 0, $row['key1'], '');
+    }
+    else{
+        $number = @number_format($number, $row['url'], $row['key1'], '');
+    }
+    
     return $number;
 }
 

@@ -237,7 +237,7 @@
                             <td>' . $row['product'] . '</td> 
                             <td>' . $row['code'] . '</td>                          
                             <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
-                             <td>' . amountFormat_general($row['qty']) . $row['unit'] . '</td>
+                             <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
                               <td>' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
                             <td>' . amountExchange($gst, 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($rate) . '%)</td>
                              <td>' . amountExchange($gst, 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($rate) . '%)</td>                           
@@ -277,7 +277,7 @@
                             <td>' . $row['product'] . '</td> 
                             <td>' . $row['code'] . '</td>                          
                             <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
-                             <td>' . amountFormat_general($row['qty']) . $row['unit'] . '</td>
+                             <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
                               <td>' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
                             <td>' . amountExchange($row['totaltax'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['tax']) . '%)</td>
                                             
@@ -312,7 +312,7 @@
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td>                           
                             <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
-                             <td>' . amountFormat_general($row['qty']) . $row['unit'] . '</td>
+                             <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
                             <td>' . amountExchange($row['totaltax'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['tax']) . '%)</td>
                             <td>' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
                             <td>' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td>
