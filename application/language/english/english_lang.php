@@ -64,6 +64,7 @@ $lang['Email Config'] = "Email Config";
 $lang['Billing Terms'] = "Billing Terms";
 $lang['Automatic Corn Job'] = "Automatic Cron Job";
 $lang['Employees'] = "Employees";
+$lang['seller'] = "Seller";
 $lang['Payment Gateways'] = "Payment Gateways";
 $lang['Payment Settings'] = "Payment Settings";
 $lang['Bank Accounts'] = "Bank Accounts";
