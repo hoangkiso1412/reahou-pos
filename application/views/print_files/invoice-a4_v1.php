@@ -264,7 +264,7 @@
             echo '<tr class="item' . $flag . '">  <td>' . $n . '</td>
                             <td>' . $row['product'] . '</td>
 							<td style="width:12%;">' . amountExchange($row['price'], $invoice['multi'], $invoice['loc']) . '</td>
-                            <td style="width:12%;" >' . +$row['qty'] . $row['unit'] . '</td>   ';
+                            <td style="width:12%;" >' . +amountFormat_general($row['qty'],true) . $row['unit'] . '</td>   ';
             if ($invoice['tax'] > 0) {
                 $cols++;
                 echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi'], $invoice['loc']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>';

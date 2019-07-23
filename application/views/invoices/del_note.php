@@ -8,6 +8,13 @@
             color: #2B2000;
             font-family: 'Helvetica';
         }
+        
+        .hidden{
+            display:none;
+        }
+        .text-center{
+            text-align:center;
+        }
 
         .invoice-box {
             width: 210mm;
@@ -300,7 +307,7 @@
             echo '<tr class="item' . $flag . '"> <td>' . $n . '</td> 
                             <td>' . $row['product'] . '</td>
 							
-                            <td style="width:6%;" >' . amountFormat_general($row['qty']) . '</td></tr>   ';
+                            <td style="width:10%;text-align:right" >' . amountFormat_general($row['qty'],true) . '</td></tr>   ';
 
 
             if ($row['product_des']) {
@@ -326,7 +333,16 @@
     <?php
 
 
-    echo '<br><div class="sign">' . $this->lang->line('Authorized person') . '</div><div class="sign1"><img src="' . base_url('userfiles/employee_sign/' . $employee['sign']) . '" width="160" height="50" border="0" alt=""></div><div class="sign2">(' . $employee['name'] . ')</div><div class="sign3">' . user_role($employee['roleid']) . '</div><br><br><br><div class="signr">_____________________________<br>' . $this->lang->line('Received by') . ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div><hr><strong>' . $this->lang->line('Terms') . ':</strong><div class="terms">' . $invoice['notes'] . '';
+    echo '<br><div class="sign hidden">' . $this->lang->line('Authorized person') . '</div>'
+            . '<div class="sign1 hidden"><img src="' . base_url('userfiles/employee_sign/' . $employee['sign']) . '" width="160" height="50" border="0" alt=""></div>'
+            . '<div class="sign2 hidden">(' . $employee['name'] . ')</div>'
+            . '<div class="sign3 hidden">' . user_role($employee['roleid']) . '</div>'
+            . "<div height='100px'><table height='100%' class='text-center'><tr>"
+            . "<td width='30%'>". $this->lang->line('Authorized person') ."</td><td width='5%'></td>"
+            . "<td width='30%'>". $this->lang->line('Delivery person') ."</td><td width='5%'></td>"
+            . "<td width='30%'>". $this->lang->line('Received by') ."</td>"
+            . "</tr></table></div>"
+            . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><div class="terms">' . $invoice['notes'] . '';
 
     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
     ?></div>

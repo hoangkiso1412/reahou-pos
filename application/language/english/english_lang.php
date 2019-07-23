@@ -667,6 +667,7 @@ $lang['Extra'] = "Extra";
 $lang['Delivery Note'] = "Delivery Note";
 $lang['Proforma Invoice'] = "Proforma Invoice";
 $lang['Delivery Order'] = "Delivery Order";
+$lang['Delivery person'] = "Delivery Person";
 $lang['Received by'] = "Received by";
 $lang['%'] = "%";
 $lang['b_p'] = "%";
