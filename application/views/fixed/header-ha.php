@@ -1145,10 +1145,10 @@
                             <ul class="drilldown-menu">
                                 <li class="menu-list">
                                     <ul class="mega-menu-sub">
-                                        <li><a class="dropdown-item" href="<?php echo base_url(); ?>import/products"><i
+                                        <li class="hidden"><a class="dropdown-item" href="<?php echo base_url(); ?>import/products"><i
                                                         class="fa fa-caret-right"></i></i><?php echo $this->lang->line('Import Products'); ?>
                                             </a></li>
-                                        <li><a class="dropdown-item" href="<?php echo base_url(); ?>import/customers"><i
+                                        <li class="hidden"><a class="dropdown-item" href="<?php echo base_url(); ?>import/customers"><i
                                                         class="fa fa-caret-right"></i><?php echo $this->lang->line('Import Customers'); ?>
                                             </a></li>
                                               <li><a  class="dropdown-item" href="<?php echo base_url(); ?>export/people_products"><i
