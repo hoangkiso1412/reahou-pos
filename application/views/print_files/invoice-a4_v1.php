@@ -8,6 +8,13 @@
             color: #2B2000;
             font-family: 'Helvetica';
         }
+        .hidden{
+            display:none;
+        }
+        
+        .text-center{
+            text-align:center;
+        }
 
         .invoice-box {
             width: 210mm;
@@ -370,7 +377,17 @@
     echo amountExchange($rming, $invoice['multi'], $invoice['loc']);
     echo '</strong></td>
 		</tr>
-		</table><br><div class="sign">' . $this->lang->line('Authorized person') . '</div><div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">(' . $employee['name'] . ')</div><div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
+		</table>
+                <br>
+                <div class="sign hidden">' . $this->lang->line('Authorized person') . '</div>'
+            . '<div class="sign1 hidden"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div>'
+            . '<div class="sign2 hidden">(' . $employee['name'] . ')</div>'
+            . "<div height='100px'><table class='text-center'><tr>"
+            . "<td height='50px' width='30%'>". $this->lang->line('Authorized person') ."</td><td width='5%'></td>"
+            . "<td width='30%'>". $this->lang->line('seller') ."</td><td width='5%'></td>"
+            . "<td width='30%'>". $this->lang->line('Customer') ."</td>"
+            . "</tr></table></div>"
+            . '<div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
 
     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
     ?></div>

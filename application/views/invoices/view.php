@@ -31,7 +31,7 @@
                                class="btn btn-large btn-info mb-1" title="Partial Payment"
                             ><span class="fa fa-money"></span> <?php echo $this->lang->line('Make Payment') ?> </a>
 
-                            <div class="btn-group">
+                            <div class="btn-group hidden">
                                 <button type="button" class="btn btn-facebook dropdown-toggle mb-1"
                                         data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
@@ -62,7 +62,7 @@
                             </div>
 
                             <!-- SMS -->
-                            <div class="btn-group">
+                            <div class="btn-group hidden">
                                 <button type="button" class="btn btn-blue dropdown-toggle mb-1"
                                         data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
@@ -130,7 +130,7 @@
 
                                 </div>
                             </div>
-                            <div class="btn-group ">
+                            <div class="btn-group hidden">
                                 <button type="button" class="btn btn-vimeo mb-1 btn-md dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                             class="fa fa-print"></i> <?php echo $this->lang->line('POS Print') ?>
@@ -449,10 +449,10 @@
                 </div>
                 <!--/ Invoice Footer -->
                 <hr>
-                <pre><?php echo $this->lang->line('Public Access URL') ?>: <?php
+                <pre class="hidden"><?php echo $this->lang->line('Public Access URL') ?>: <?php
                     echo $link ?></pre>
 
-                <div class="row">
+                <div class="row hidden">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -470,7 +470,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card">
+                <div class="card hidden">
                     <pre>Allowed: gif, jpeg, png, docx, docs, txt, pdf, xls </pre>
                     <br>
                     <!-- The fileinput-button span is used to style the file input field as button -->
