@@ -6,7 +6,7 @@ $query_builder = TRUE;
 $hostname ='localhost:3307';
 $username ='root';
 $password ='';
-$database ='geo-pos';
+$database ='reahou_pos';
 
 $db['default'] = array(
 	'dsn'	=> '',

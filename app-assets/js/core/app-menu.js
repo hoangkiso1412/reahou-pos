@@ -502,7 +502,7 @@
       megaMenu           = $('li[data-menu="megamenu"]'),
       megaMenuCol        = $('li[data-mega-col]'),
       dropdownMenu       = $('li[data-menu="dropdown"]'),
-      dropdownSubMenu    = $('li[data-menu="dropdown-submenu"]');
+      dropdownSubMenu    = $('li[data-menu="dropdown-submenu"]').not('.hidden');
 
       if(screen == 'sm' || screen == 'xs'){
 
@@ -521,7 +521,7 @@
         megaMenu.removeClass('dropdown mega-dropdown').addClass('has-sub');
         megaMenu.children('ul').removeClass();
         megaMenuCol.each(function(index, el) {
-
+            
           // Remove drilldown-menu and menu list
           var megaMenuSub = $(el).find('.mega-menu-sub');
           megaMenuSub.find('li').has('ul').addClass('has-sub');
@@ -655,13 +655,13 @@
     init: function(config) {
       this.initialized = true; // Set to true when initialized
       $.extend(this.config, config);
-
+      
       this.bind_events();
     },
 
     bind_events: function() {
       var menuObj = this;
-
+      
       $('.navigation-main').on('mouseenter.app.menu', 'li', function() {
         var $this = $(this);
         $('.hover', '.navigation-main').removeClass('hover');
