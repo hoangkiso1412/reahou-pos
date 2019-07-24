@@ -49,14 +49,14 @@
                                    class="btn btn-primary btn-block btn-md mr-1 mb-1 btn-lighten-1"><i
                                             class="fa fa-briefcase"></i> <?php echo $this->lang->line('Account Statements') ?>
                                 </a>
-                                <a href="<?php echo base_url('customers/quotes?id=' . $details['id']) ?>"
+                                <a  class="hidden" href="<?php echo base_url('customers/quotes?id=' . $details['id']) ?>"
                                    class="btn btn-purple btn-md mr-1 mb-1 btn-block btn-lighten-1"><i
                                             class="fa fa-quote-left"></i> <?php echo $this->lang->line('Quotes') ?>
-                                </a> <a href="<?php echo base_url('customers/projects?id=' . $details['id']) ?>"
+                                </a> <a class="hidden" href="<?php echo base_url('customers/projects?id=' . $details['id']) ?>"
                                         class="btn btn-vimeo btn-md mr-1 mb-1 btn-block btn-lighten-2"><i
                                             class="fa fa-bullhorn"></i> <?php echo $this->lang->line('Projects') ?>
                                 </a>
-                                <a href="<?php echo base_url('customers/invoices?id=' . $details['id']) ?>&t=sub"
+                                <a class="hidden" href="<?php echo base_url('customers/invoices?id=' . $details['id']) ?>&t=sub"
                                    class="btn btn-flickr btn-md mr-1 mb-1 btn-block btn-lighten-1"><i
                                             class="fa fa-calendar-check-o"></i> <?php echo $this->lang->line('Subscriptions') ?>
                                 </a>
@@ -66,7 +66,7 @@
                                 </a>
 
 
-                                <a href="<?php echo base_url('customers/documents?id=' . $details['id']) ?>"
+                                <a class="hidden" href="<?php echo base_url('customers/documents?id=' . $details['id']) ?>"
                                    class="btn btn-facebook btn-md mr-1 mb-1 btn-block btn-lighten-1"><i
                                             class="icon-folder"></i> <?php echo $this->lang->line('Documents') ?>
                                 </a>
@@ -80,11 +80,11 @@
                         <div id="mybutton" class="mb-1">
 
                             <div class="">
-                                <a href="<?php echo base_url('customers/balance?id=' . $details['id']) ?>"
+                                <a class="hidden" href="<?php echo base_url('customers/balance?id=' . $details['id']) ?>"
                                    class="btn btn-success btn-md"><i
                                             class="fa fa-briefcase"></i> <?php echo $this->lang->line('Wallet') ?>
                                 </a>
-                                <a href="#sendMail" data-toggle="modal" data-remote="false"
+                                <a class="hidden" href="#sendMail" data-toggle="modal" data-remote="false"
                                    class="btn btn-primary btn-md " data-type="reminder"><i
                                             class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Message') ?>
                                 </a>
@@ -96,7 +96,7 @@
                                 </a>
 
 
-                                <a href="<?php echo base_url('customers/changepassword?id=' . $details['id']) ?>"
+                                <a class="hidden" href="<?php echo base_url('customers/changepassword?id=' . $details['id']) ?>"
                                    class="btn btn-danger btn-md"><i
                                             class="fa fa-key"></i> <?php echo $this->lang->line('Change Password') ?>
                                 </a>
