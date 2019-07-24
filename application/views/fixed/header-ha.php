@@ -86,6 +86,10 @@
                                                                href="<?php echo base_url(); ?>settings/company"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Company') . ' ' . $this->lang->line('Settings') ?>
                                                             </a></li>
+                                                            <li><a class="dropdown-item"
+                                                               href="<?php echo base_url(); ?>tools/setgoals"><i
+                                                                        class="ft-chevron-right"></i> <?php echo $this->lang->line('Set Goals') ?>
+                                                            </a></li>
                                                         <li><a class="dropdown-item hidden"
                                                                href="<?php echo base_url(); ?>locations"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Business Locations') ?>
@@ -99,10 +103,7 @@
                         }
                         echo ' <option value="0">Master/Default</option>';
                         ?></select></li>
-                                                        <li class="hidden"><a class="dropdown-item"
-                                                               href="<?php echo base_url(); ?>tools/setgoals"><i
-                                                                        class="ft-chevron-right"></i> <?php echo $this->lang->line('Set Goals') ?>
-                                                            </a></li>
+                                                       
                                                     </ul>
                                                 </div>
                                             </div>
@@ -599,7 +600,7 @@
                                                                       data-toggle="dropdown"><i
                                 class="icon-basket-loaded"></i><span><?php echo $this->lang->line('sales') ?></span></a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                        <li class="dropdown dropdown-submenu hidden" data-menu="dropdown-submenu"><a
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="icon-paper-plane"></i><?php echo $this->lang->line('pos sales') ?></a>
                             <ul class="dropdown-menu">
@@ -1145,10 +1146,10 @@
                             <ul class="drilldown-menu">
                                 <li class="menu-list">
                                     <ul class="mega-menu-sub">
-                                        <li><a class="dropdown-item" href="<?php echo base_url(); ?>import/products"><i
+                                        <li class="hidden"><a class="dropdown-item" href="<?php echo base_url(); ?>import/products"><i
                                                         class="fa fa-caret-right"></i></i><?php echo $this->lang->line('Import Products'); ?>
                                             </a></li>
-                                        <li><a class="dropdown-item" href="<?php echo base_url(); ?>import/customers"><i
+                                        <li class="hidden"><a class="dropdown-item" href="<?php echo base_url(); ?>import/customers"><i
                                                         class="fa fa-caret-right"></i><?php echo $this->lang->line('Import Customers'); ?>
                                             </a></li>
                                               <li><a  class="dropdown-item" href="<?php echo base_url(); ?>export/people_products"><i

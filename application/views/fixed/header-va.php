@@ -229,7 +229,7 @@
                                                                href="<?php echo base_url(); ?>settings/billing_terms"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Billing Terms') ?>
                                                             </a></li>
-                                                        <li><a class="dropdown-item"
+                                                        <li class="hidden"><a class="dropdown-item"
                                                                href="<?php echo base_url(); ?>settings/automail"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Auto Email SMS') ?>
                                                             </a></li>
@@ -1085,10 +1085,10 @@
                     <li><a href="<?php echo base_url(); ?>export/dbexport"><i
                                     class="fa fa-caret-right"></i> <?php echo $this->lang->line('Database Backup'); ?>
                         </a></li>
-                    <li><a href="<?php echo base_url(); ?>import/products"><i
+                    <li class="hidden"> <a href="<?php echo base_url(); ?>import/products"><i
                                     class="fa fa-caret-right"></i></i> <?php echo $this->lang->line('Import Products'); ?>
                         </a></li>
-                    <li><a href="<?php echo base_url(); ?>import/customers"><i
+                    <li class="hidden"><a href="<?php echo base_url(); ?>import/customers"><i
                                     class="fa fa-caret-right"></i> <?php echo $this->lang->line('Import Customers'); ?>
                         </a></li>
                     <li class="mt-1"></li>
