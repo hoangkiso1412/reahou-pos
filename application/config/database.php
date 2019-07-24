@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $active_group = 'default';
 $query_builder = TRUE;
-$hostname ='localhost:3307';
+$hostname ='localhost';
 $username ='root';
-$password ='';
-$database ='geo-pos';
+$password ='123456';
+$database ='reahou_pos';
 
 $db['default'] = array(
 	'dsn'	=> '',
