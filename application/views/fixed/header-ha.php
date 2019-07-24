@@ -86,6 +86,10 @@
                                                                href="<?php echo base_url(); ?>settings/company"><i
                                                                         class="ft-chevron-right"></i> <?php echo $this->lang->line('Company') . ' ' . $this->lang->line('Settings') ?>
                                                             </a></li>
+                                                            <li><a class="dropdown-item"
+                                                               href="<?php echo base_url(); ?>tools/setgoals"><i
+                                                                        class="ft-chevron-right"></i> <?php echo $this->lang->line('Set Goals') ?>
+                                                            </a></li>
                                                         <li><a class="dropdown-item hidden"
                                                                href="<?php echo base_url(); ?>locations"><i
                                                                         class="ft-chevron-right"></i><?php echo $this->lang->line('Business Locations') ?>
@@ -99,10 +103,7 @@
                         }
                         echo ' <option value="0">Master/Default</option>';
                         ?></select></li>
-                                                        <li class="hidden"><a class="dropdown-item"
-                                                               href="<?php echo base_url(); ?>tools/setgoals"><i
-                                                                        class="ft-chevron-right"></i> <?php echo $this->lang->line('Set Goals') ?>
-                                                            </a></li>
+                                                       
                                                     </ul>
                                                 </div>
                                             </div>
