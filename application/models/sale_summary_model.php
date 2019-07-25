@@ -22,7 +22,7 @@ class Sale_summary_model extends CI_Model
 {
     var $table = 'geopos_invoices';
     var $column_order = array(null, 'geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total', 'geopos_invoices.status', null);
-    var $column_search = array('geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total','geopos_invoices.status');
+    var $column_search = array('geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total','geopos_invoices.status','geopos_users.username','geopos_customers.phone','geopos_customers.address');
     var $order = array('geopos_invoices.tid' => 'desc');
 
     public function __construct()
@@ -45,40 +45,11 @@ class Sale_summary_model extends CI_Model
             return 1000;
         }
     }
-
-
-    public function invoice_details($id, $eid = '')
-    {
-        $this->db->select('geopos_invoices.*,SUM(geopos_invoices.shipping + geopos_invoices.ship_tax) AS shipping,geopos_customers.*,geopos_invoices.loc as loc,geopos_invoices.id AS iid,geopos_customers.id AS cid,geopos_terms.id AS termid,geopos_terms.title AS termtit,geopos_terms.terms AS terms');
-        $this->db->from($this->table);
-        $this->db->where('geopos_invoices.id', $id);
-        if ($eid) {
-            $this->db->where('geopos_invoices.eid', $eid);
-        }
-              if ($this->aauth->get_user()->loc) {
-            $this->db->where('geopos_invoices.loc', $this->aauth->get_user()->loc);
-        } elseif (!BDATA) {
-            $this->db->where('geopos_invoices.loc', 0);
-        }
-        $this->db->join('geopos_customers', 'geopos_invoices.csd = geopos_customers.id', 'left');
-        $this->db->join('geopos_terms', 'geopos_terms.id = geopos_invoices.term', 'left');
-        $query = $this->db->get();
-        return $query->row_array();
-    }
-
-    public function invoice_products($id)
-    {
-
-        $this->db->select('*');
-        $this->db->from('geopos_invoice_items');
-        $this->db->where('tid', $id);
-        $query = $this->db->get();
-        return $query->result_array();
-
-    }    
+ 
     private function _get_datatables_query($opt = '')
     {
-        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name,geopos_users.username,DATE_FORMAT(geopos_invoices.invoicedate, "%Y%m") as period');
+
+        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name,geopos_users.username,DATE_FORMAT(geopos_invoices.invoicedate, "%Y%m") as period,geopos_customers.phone,geopos_customers.address,geopos_users.id');
         $this->db->from($this->table);
         $this->db->where('geopos_invoices.i_class', 0);
         if ($opt) {
@@ -88,10 +59,19 @@ class Sale_summary_model extends CI_Model
             $this->db->where('geopos_invoices.loc', $this->aauth->get_user()->loc);
         }
         elseif(!BDATA) { $this->db->where('geopos_invoices.loc', 0); }
-        if ($this->input->post('start_date') && $this->input->post('end_date')) // if datatable send POST for search
+        
+        if ($this->input->post('start_date') && $this->input->post('end_date') && $this->input->post('seller')) // if datatable send POST for search
         {
+
             $this->db->where('DATE(geopos_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
             $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
+            $this->db->where('geopos_users.id = ', $this->input->post('seller'));
+
+        }elseif($this->input->post('start_date') && $this->input->post('end_date')){
+
+            $this->db->where('DATE(geopos_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
+            $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
+
         }
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
         $this->db->join('geopos_users', 'geopos_invoices.eid = geopos_users.id', 'left');
