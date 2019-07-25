@@ -387,6 +387,13 @@ function locations()
     $query2 = $ci->db->query("SELECT * FROM geopos_locations");
     return $query2->result_array();
 }
+function employees()
+{
+    $ci =& get_instance();
+    $ci->load->database();
+    $query2 = $ci->db->query("SELECT * FROM geopos_users");
+    return $query2->result_array();
+}
 
 function location($number = 0)
 {
