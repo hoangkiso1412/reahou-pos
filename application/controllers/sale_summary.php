@@ -67,11 +67,13 @@ class Sale_summary extends CI_Controller
 
             $row[] =  $invoices->tid;
             $row[] = $invoices->name;
-            $row[] = $invoices->username;
+            $row[] = $invoices->address;
+            $row[] = $invoices->phone;
             $row[] = dateformat($invoices->invoicedate);
             $row[] = dateformat($invoices->invoiceduedate);
             $row[] = $invoices->period;
             $row[] = amountExchange($invoices->total, 0, $this->aauth->get_user()->loc);
+            $row[] = $invoices->username;
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
             $data[] = $row;
         }
@@ -83,26 +85,5 @@ class Sale_summary extends CI_Controller
         );
         //output to json format
         echo json_encode($output);
-    }
-
-    public function view()
-    {
-        $this->load->model('accounts_model');
-        $data['acclist'] = $this->accounts_model->accountslist((integer)$this->aauth->get_user()->loc);
-        $tid = $this->input->get('id');
-        $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        $data['attach'] = $this->invocies->attach($tid);
-        $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1);
-        $head['usernm'] = $this->aauth->get_user()->username;
-        $head['title'] = "Invoice " . $data['invoice']['tid'];
-        $this->load->view('fixed/header', $head);
-        $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']['id']) $data['activity'] = $this->invocies->invoice_transactions($tid);
-        $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
-        if ($data['invoice']['id']) {
-            $data['invoice']['id'] = $tid;
-            $this->load->view('invoices/view', $data);
-        }
-        $this->load->view('fixed/footer');
     }
 }
