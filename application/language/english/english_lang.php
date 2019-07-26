@@ -42,6 +42,7 @@ $lang['Account Statements'] = "Account Statements";
 $lang['Transactions'] = "Transactions";
 $lang['View Transactions'] = "View Transactions";
 $lang['New Transaction'] = "New Transaction";
+$lang['Customer Credit'] = "Customer Credit";
 $lang['New Transfer'] = "New Transfer";
 $lang['Miscellaneous'] = "Miscellaneous";
 $lang['Data & Reports'] = "Data & Reports";

@@ -18,7 +18,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Invoices_model extends CI_Model
+class InvoiceCredit_model extends CI_Model
 {
     var $table = 'geopos_invoices';
     var $column_order = array(null, 'geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total', 'geopos_invoices.status', null);
@@ -213,7 +213,7 @@ class Invoices_model extends CI_Model
 
     private function _get_datatables_query($opt = '')
     {
-        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name');
+        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name,geopos_employees.name as emp_name');
         $this->db->from($this->table);
         $this->db->where('geopos_invoices.i_class', 0);
         if ($opt) {
@@ -227,10 +227,11 @@ class Invoices_model extends CI_Model
         {
             $this->db->where('DATE(geopos_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
             $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
-            
+            $this->db->where('geopos_invoice.status=','due');
         }
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
-
+        $this->db->join('geopos_employees', 'geopos_invoices.eid=geopos_employees.id', 'left');
+        
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column

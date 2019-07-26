@@ -886,6 +886,9 @@
                                 <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customers"
                                                     data-toggle="dropdown"><?= $this->lang->line('Clients Transactions'); ?></a>
                                 </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customercredit"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Customer Credit'); ?></a>
+                                </li>
                             </ul>
                         </li>
  <li data-menu=""><a class="dropdown-item"

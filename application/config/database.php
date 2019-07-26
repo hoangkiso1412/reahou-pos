@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $active_group = 'default';
 $query_builder = TRUE;
-$hostname ='localhost';
-$username ='root';
-$password ='123456';
+$hostname ='reahou.com';
+$username ='reahou_website';
+$password ='website_reahou';
 $database ='reahou_pos';
 
 $db['default'] = array(
