@@ -1,7 +1,7 @@
 <div class="content-body">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title"><?php echo "Customer Credit"//$this->lang->line('Manage Invoices') ?></h4>
+            <h4 class="card-title"><?php echo "Year To Date"//$this->lang->line('Manage Invoices') ?></h4>
             <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
             <div class="heading-elements">
                 <ul class="list-inline mb-0">
@@ -20,18 +20,16 @@
             <div class="card-body">
                 <div class="row">
 
-                    <div class="col-md-2"><?php echo $this->lang->line('Invoice Date') ?></div>
+                    <div class="col-md-2"><?php echo "Filter" ?></div>
                     <div class="col-md-2">
-                        <input type="text" name="start_date" id="start_date"
-                               class="date30 form-control form-control-sm" autocomplete="off"/>
+                        <select name="roleid" class="form-control margin-bottom">
+                            <option value="4"><?php echo "2019" ?></option>
+                            <option value="3"><?php echo "2018" ?></option>
+                            <option value="5"><?php echo "2017" ?></option>
+                        </select>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" name="end_date" id="end_date" class="form-control form-control-sm"
-                               data-toggle="datepicker" autocomplete="off"/>
-                    </div>
-
-                    <div class="col-md-2">
-                        <input type="button" name="search" id="search" value="Search" class="btn btn-info btn-sm"/>
+                        <input type="button" name="search" id="search" value="Search" class="btn btn-info btn-md"/>
                     </div>
 
                 </div>
@@ -40,15 +38,22 @@
                     <thead>
                     <tr>
                         <th><?php echo $this->lang->line('No') ?></th>
-                        <th>#</th>
-                        <th><?php echo "Account Name"//echo $this->lang->line('Customer') ?></th>
-                        <th><?php echo "Zoon"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo "Reference"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo "Date"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo $this->lang->line('Amount') ?></th>
-                        <th><?php echo "Age"//$this->lang->line('Amount') ?></th>  
-                        <th><?php echo "Due Date"//$this->lang->line('Amount') ?></th> 
-                        <th><?php echo "Sale rep"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Customer" ?></th>
+                        <th><?php echo "Address"//echo $this->lang->line('Customer') ?></th>
+                        <th><?php echo "Tell"//$this->lang->line('Customer') ?></th>
+                        <th><?php echo "Jan"//$this->lang->line('Customer') ?></th>
+                        <th><?php echo "Feb"//$this->lang->line('Customer') ?></th>
+                        <th><?php echo "Mar"?></th>
+                        <th><?php echo "Apr"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "May"//$this->lang->line('Amount') ?></th> 
+                        <th><?php echo "June"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Jul"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Aug"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Sep"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Oct"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Nov"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Des"//$this->lang->line('Amount') ?></th>
+                        <th><?php echo "Total"//$this->lang->line('Amount') ?></th>  
                     </tr>
                     </thead>
                     <tbody>
@@ -57,15 +62,22 @@
                     <tfoot>
                     <tr>
                         <th><?php echo $this->lang->line('No') ?></th>
-                        <th> #</th>
-                        <th><?php echo "Acount Name"//echo $this->lang->line('Customer') ?></th>
-                        <th><?php echo "Zoon"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo "Reference"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo "Date"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo $this->lang->line('Amount') ?></th>
-                        <th><?php echo "Age"//$this->lang->line('Amount') ?></th>  
-                         <th><?php echo "Due Date"//$this->lang->line('Amount') ?></th> 
-                        <th><?php echo "Sale rep"//$this->lang->line('Amount') ?></th>
+                        <th><?php echo "Customer" ?></th>
+                        <th><?php echo "Address"//echo $this->lang->line('Customer') ?></th>
+                        <th><?php echo "Tell"//$this->lang->line('Customer') ?></th>
+                        <th><?php echo "Jan"//$this->lang->line('Customer') ?></th>
+                        <th><?php echo "Feb"//$this->lang->line('Customer') ?></th>
+                        <th><?php echo "Mar"?></th>
+                        <th><?php echo "Apr"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "May"//$this->lang->line('Amount') ?></th> 
+                        <th><?php echo "June"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Jul"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Aug"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Sep"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Oct"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Nov"//$this->lang->line('Amount') ?></th>  
+                        <th><?php echo "Des"//$this->lang->line('Amount') ?></th>
+                        <th><?php echo "Total"//$this->lang->line('Amount') ?></th>  
                     </tr>
                     </tfoot>
                 </table>
@@ -110,7 +122,7 @@
                 responsive: true,
                 'order': [],
                 'ajax': {
-                    'url': "<?php echo site_url('customercredit/ajax_list')?>",
+                    'url': "<?php echo site_url('yeartodate/ajax_list')?>",
                     'type': 'POST',
                     'data': {
                         '<?=$this->security->get_csrf_token_name()?>': crsf_hash,
@@ -124,48 +136,6 @@
                         'orderable': false,
                     },
                 ],
-                "drawCallback": function ( settings ) {
-                    var api = this.api();
-                    var rows = api.rows( {page:'current'} ).nodes();
-                    var last=null;
-                    var subTotal = new Array();
-                    var groupID = -1;
-                    var aData = new Array();
-                    var index = 0;
-                    
-                    api.column(1, {page:'current'} ).data().each( function ( group, i ) {
-                        
-                    // console.log(group+">>>"+i);
-                    
-                    var vals = api.row(api.row($(rows).eq(i)).index()).data();
-                    var salary = vals[6] ? parseFloat(vals[6]) : 0;
-
-                    // alert(salary);
-                    
-                    if (typeof aData[group] == 'undefined') {
-                        aData[group] = new Array();
-                        aData[group].rows = [];
-                        aData[group].salary = [];
-                    }
-                
-                        aData[group].rows.push(i); 
-                        aData[group].salary.push(salary); 
-                        
-                    } );
-                    var idx= 0;
-                    for(var office in aData){
-                        idx =  Math.max.apply(Math,aData[office].rows);
-                        var sum = 0; 
-                        $.each(aData[office].salary,function(k,v){
-                            sum = sum + v;
-                        });
-                        console.log(aData[office].salary);
-                        $(rows).eq( idx ).after(
-                            '<tr class="group"><td colspan="5"></td><td>'+'TOTAL'+'</td>'+
-                            '<td>'+(sum.toFixed(2))+'</td><td></td><td></td></tr>'
-                        );  
-                    };
-                },
                 dom: 'Blfrtip',
                 buttons: [
                     {

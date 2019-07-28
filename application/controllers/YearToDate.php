@@ -18,12 +18,12 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class CustomerCredit extends CI_Controller
+class YearToDate extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('invoicecredit_model', 'invocies');
+        $this->load->model('yeartodate_model', 'invocies');
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -42,7 +42,7 @@ class CustomerCredit extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Customers Credit';
         $this->load->view('fixed/header', $head);
-        $this->load->view('customers/customercredit');
+        $this->load->view('customers/yeartodate');
         $this->load->view('fixed/footer');
     }
     public function ajax_list()
@@ -54,15 +54,22 @@ class CustomerCredit extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = '<a href="' . base_url("invoices/view?id=$invoices->id") . '">&nbsp; ' . $invoices->tid . '</a>';
-            $row[] = $invoices->name;
+            $row[] = $invoices->geopos_customers;
             $row[] = '';
-            $row[] = $invoices->refer;
-            $row[] = dateformat($invoices->invoicedate);
-            $row[] = $invoices->total;
-            $row[] =  $invoices->age;
-            $row[] =  $invoices->invoiceduedate;
-            $row[] =  $invoices->emp_name;
+            $row[] = '';
+            $row[] = $invoices->jan;
+            $row[] = $invoices->feb;
+            $row[] = $invoices->mar;
+            $row[] = $invoices->apr;
+            $row[] = $invoices->may;
+            $row[] = $invoices->jun;
+            $row[] = $invoices->jul;
+            $row[] = $invoices->aug;
+            $row[] = $invoices->sep;
+            $row[] = $invoices->oct;
+            $row[] = $invoices->nov;
+            $row[] = $invoices->descb;
+            $row[] = '';
             $data[] = $row;
         }
         $output = array(

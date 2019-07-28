@@ -43,6 +43,7 @@ $lang['Transactions'] = "Transactions";
 $lang['View Transactions'] = "View Transactions";
 $lang['New Transaction'] = "New Transaction";
 $lang['Customer Credit'] = "Customer Credit";
+$lang['Year to date']  = 'Year To Date';
 $lang['New Transfer'] = "New Transfer";
 $lang['Miscellaneous'] = "Miscellaneous";
 $lang['Data & Reports'] = "Data & Reports";
