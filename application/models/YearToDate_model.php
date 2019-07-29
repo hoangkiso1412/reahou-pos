@@ -18,11 +18,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Invoices_model extends CI_Model
+class YearToDate_model extends CI_Model
 {
     var $table = 'geopos_invoices';
-    var $column_order = array(null, 'geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total', 'geopos_invoices.status', null);
-    var $column_search = array('geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total','geopos_invoices.status');
+    var $column_order = array(null, 'geopos_invoices.id','geopos_invoices.tid','geopos_invoices.invoicedate','geopos_invoices.invoiceduedate','geopos_invoices.total','geopos_invoices.status','geopos_customers.name','geopos_employees.name as emp_name','geopos_invoices.refer','(DATE_FORMAT(geopos_invoices.invoiceduedate,"%d")-DATE_FORMAT(now(),"%d")) as age', null);
+    var $column_search = array('geopos_invoices.id','geopos_invoices.tid','geopos_invoices.invoicedate','geopos_invoices.invoiceduedate','geopos_invoices.total','geopos_invoices.status','geopos_customers.name','geopos_employees.name as emp_name','geopos_invoices.refer','(DATE_FORMAT(geopos_invoices.invoiceduedate,"%d")-DATE_FORMAT(now(),"%d")) as age');
     var $order = array('geopos_invoices.tid' => 'desc');
 
     public function __construct()
@@ -68,9 +68,8 @@ class Invoices_model extends CI_Model
     public function invoice_products($id)
     {
 
-        $this->db->select('geopos_invoice_items.*,geopos_products.product_code,geopos_products.barcode');
+        $this->db->select('*');
         $this->db->from('geopos_invoice_items');
-        $this->db->join('geopos_products', 'geopos_invoice_items.pid = geopos_products.pid','LEFT');
         $this->db->where('tid', $id);
         $query = $this->db->get();
         return $query->result_array();
@@ -214,52 +213,24 @@ class Invoices_model extends CI_Model
 
     private function _get_datatables_query($opt = '')
     {
-        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name');
+        // $sub_query_from = "(SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='01') as Jan";
+        $this->db->select("geopos_invoices.id,geopos_customers.name,geopos_customers.address,geopos_customers.phone_s,geopos_invoices.csd,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='01') as jan,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='02') as feb,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='03') as mar,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='04') as apr,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='05') as may,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='06') as jun,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='07') as jul,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='08') as aub,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='09') as sep,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='10') as oct,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='11') as nov,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='12') as descb");
         $this->db->from($this->table);
         $this->db->where('geopos_invoices.i_class', 0);
-        if ($opt) {
-            $this->db->where('geopos_invoices.eid', $opt);
-        }
-        if ($this->aauth->get_user()->loc) {
-            $this->db->where('geopos_invoices.loc', $this->aauth->get_user()->loc);
-        }
-        elseif(!BDATA) { $this->db->where('geopos_invoices.loc', 0); }
-        if ($this->input->post('start_date') && $this->input->post('end_date')) // if datatable send POST for search
-        {
-            $this->db->where('DATE(geopos_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
-            $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
-            
-        }
-        $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
-
-        $i = 0;
-
-        foreach ($this->column_search as $item) // loop column
-        {
-            if ($this->input->post('search')['value']) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
-                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
-                    $this->db->like($item, $this->input->post('search')['value']);
-                } else {
-                    $this->db->or_like($item, $this->input->post('search')['value']);
-                }
-
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
-            }
-            $i++;
-        }
-
-        if (isset($_POST['order'])) // here order processing
-        {
-            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->order)) {
-            $order = $this->order;
-            $this->db->order_by(key($order), $order[key($order)]);
-        }
+        $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'inner');
+        $this->db->group_by("geopos_customers.id"); 
     }
 
     function get_datatables($opt = '')
