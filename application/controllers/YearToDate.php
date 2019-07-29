@@ -54,9 +54,9 @@ class YearToDate extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $invoices->geopos_customers;
-            $row[] = '';
-            $row[] = '';
+            $row[] = $invoices->name;
+            $row[] = $invoices->address;
+            $row[] = $invoices->phone_s;
             $row[] = $invoices->jan;
             $row[] = $invoices->feb;
             $row[] = $invoices->mar;
