@@ -892,6 +892,9 @@
                                 <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>yeartodate"
                                                     data-toggle="dropdown"><?= $this->lang->line('Year to date'); ?></a>
                                 </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>sale_summary"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Sale Date Checking'); ?></a>
+                                </li>
                             </ul>
                         </li>
  <li data-menu=""><a class="dropdown-item"
