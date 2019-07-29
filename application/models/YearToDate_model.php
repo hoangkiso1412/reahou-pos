@@ -18,11 +18,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Invoices_model extends CI_Model
+class YearToDate_model extends CI_Model
 {
     var $table = 'geopos_invoices';
-    var $column_order = array(null, 'geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total', 'geopos_invoices.status', null);
-    var $column_search = array('geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total','geopos_invoices.status');
+    var $column_order = array(null, 'geopos_invoices.id','geopos_invoices.tid','geopos_invoices.invoicedate','geopos_invoices.invoiceduedate','geopos_invoices.total','geopos_invoices.status','geopos_customers.name','geopos_employees.name as emp_name','geopos_invoices.refer','(DATE_FORMAT(geopos_invoices.invoiceduedate,"%d")-DATE_FORMAT(now(),"%d")) as age', null);
+    var $column_search = array('geopos_invoices.id','geopos_invoices.tid','geopos_invoices.invoicedate','geopos_invoices.invoiceduedate','geopos_invoices.total','geopos_invoices.status','geopos_customers.name','geopos_employees.name as emp_name','geopos_invoices.refer','(DATE_FORMAT(geopos_invoices.invoiceduedate,"%d")-DATE_FORMAT(now(),"%d")) as age');
     var $order = array('geopos_invoices.tid' => 'desc');
 
     public function __construct()
@@ -213,9 +213,23 @@ class Invoices_model extends CI_Model
 
     private function _get_datatables_query($opt = '')
     {
-        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name');
+        // $sub_query_from = "(SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='01') as Jan";
+        $this->db->select("geopos_invoices.id,geopos_customers.name,geopos_invoices.csd,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='01') as jan,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='02') as feb,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='03') as mar,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='04') as apr,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='05') as may,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='06') as jun,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='07') as jul,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='08') as aub,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='09') as sep,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='10') as oct,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='11') as nov,
+        (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=csd AND date_format(invoicedate,'%m')='12') as descb");
         $this->db->from($this->table);
         $this->db->where('geopos_invoices.i_class', 0);
+        //$this->db->group_by('geopos_invoices.csd'); 
         if ($opt) {
             $this->db->where('geopos_invoices.eid', $opt);
         }
@@ -227,10 +241,11 @@ class Invoices_model extends CI_Model
         {
             $this->db->where('DATE(geopos_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
             $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
-            
+            $this->db->where('geopos_invoices.status=','due');
         }
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
-
+        $this->db->join('geopos_employees', 'geopos_invoices.eid=geopos_employees.id', 'left');
+        
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column
