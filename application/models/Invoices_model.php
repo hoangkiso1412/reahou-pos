@@ -68,8 +68,9 @@ class Invoices_model extends CI_Model
     public function invoice_products($id)
     {
 
-        $this->db->select('*');
+        $this->db->select('geopos_invoice_items.*,geopos_products.product_code,geopos_products.barcode');
         $this->db->from('geopos_invoice_items');
+        $this->db->join('geopos_products', 'geopos_invoice_items.pid = geopos_products.pid','LEFT');
         $this->db->where('tid', $id);
         $query = $this->db->get();
         return $query->result_array();

@@ -1,39 +1,20 @@
-<table>
+<?php $loc = location($invoice['loc']); ?>
+<table style="margin-left: 25px">
     <tr>
         <td class="myco">
             <img src="<?php $loc = location($invoice['loc']);
             echo FCPATH . 'userfiles/company/' . $loc['logo'] ?>"
                  class="top_logo">
         </td>
-        <td>
-
+        <td class="myc">
+            <?php echo $loc['cname'] ?>
         </td>
         <td class="myw">
-            <table class="top_sum">
-                <tr>
-                    <td colspan="1" class="t_center"><h2><?= $general['title'] ?></h2><br><br></td>
-                </tr>
-                <tr>
-                    <td><?= $general['title'] ?></td>
-                    <td><?= $general['prefix'] . ' ' . $invoice['tid'] ?></td>
-                </tr>
-                <tr>
-                    <td><?= $general['title'] . ' ' . $this->lang->line('Date') ?></td>
-                    <td><?php echo dateformat($invoice['invoicedate']) ?></td>
-                </tr>
-                <tr>
-                    <td><?php echo $this->lang->line('Due Date') ?></td>
-                    <td><?php echo dateformat($invoice['invoiceduedate']) ?></td>
-                </tr>
-                <?php if ($invoice['refer']) { ?>
-                    <tr>
-                        <td><?php echo $this->lang->line('Reference') ?></td>
-                        <td><?php echo $invoice['refer'] ?></td>
-                    </tr>
-                <?php } ?>
-            </table>
-
-
+            <?php echo $loc['address'] . ',' . $loc['city'] . ', ' . $loc['country'] 
+                    . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] 
+                    . '<br>' . $this->lang->line('Email') . ' : ' . $loc['email'];
+                    if ($loc['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+            ?>
         </td>
     </tr>
 </table>
