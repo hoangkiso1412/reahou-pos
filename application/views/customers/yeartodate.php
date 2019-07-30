@@ -22,10 +22,16 @@
 
                     <div class="col-md-2"><?php echo "Filter" ?></div>
                     <div class="col-md-2">
-                        <select name="roleid" class="form-control margin-bottom">
-                            <option value="4"><?php echo "2019" ?></option>
-                            <option value="3"><?php echo "2018" ?></option>
-                            <option value="5"><?php echo "2017" ?></option>
+                        <select name="start_date" id="start_date" class="form-control margin-bottom">
+                            <?php 
+                                $query = $this->db->query("select distinct date_format(gi.invoicedate,'%Y') year FROM  geopos_invoices as gi order by year desc;");
+
+                                foreach ($query->result() as $row)
+                                {
+                                    echo '<option value="'.$row->year.'">'.$row->year.'</option>';
+                                }
+                            ?>
+                           
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -59,27 +65,6 @@
                     <tbody>
                     </tbody>
 
-                    <tfoot>
-                    <tr>
-                        <th><?php echo $this->lang->line('No') ?></th>
-                        <th><?php echo "Customer" ?></th>
-                        <th><?php echo "Address"//echo $this->lang->line('Customer') ?></th>
-                        <th><?php echo "Tell"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo "Jan"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo "Feb"//$this->lang->line('Customer') ?></th>
-                        <th><?php echo "Mar"?></th>
-                        <th><?php echo "Apr"//$this->lang->line('Amount') ?></th>  
-                        <th><?php echo "May"//$this->lang->line('Amount') ?></th> 
-                        <th><?php echo "June"//$this->lang->line('Amount') ?></th>  
-                        <th><?php echo "Jul"//$this->lang->line('Amount') ?></th>  
-                        <th><?php echo "Aug"//$this->lang->line('Amount') ?></th>  
-                        <th><?php echo "Sep"//$this->lang->line('Amount') ?></th>  
-                        <th><?php echo "Oct"//$this->lang->line('Amount') ?></th>  
-                        <th><?php echo "Nov"//$this->lang->line('Amount') ?></th>  
-                        <th><?php echo "Des"//$this->lang->line('Amount') ?></th>
-                        <th><?php echo "Total"//$this->lang->line('Amount') ?></th>  
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
@@ -114,7 +99,7 @@
     $(document).ready(function () {
         draw_data();
 
-        function draw_data(start_date = '', end_date = '') {
+        function draw_data(start_date = '') {
             $('#invoices').DataTable({
                 'processing': true,
                 'serverSide': true,
@@ -126,8 +111,7 @@
                     'type': 'POST',
                     'data': {
                         '<?=$this->security->get_csrf_token_name()?>': crsf_hash,
-                        start_date: start_date,
-                        end_date: end_date
+                        start_date: start_date
                     }
                 },
                 'columnDefs': [
@@ -150,12 +134,12 @@
         };
 
         $('#search').click(function () {
-            alert('test');
+
             var start_date = $('#start_date').val();
-            var end_date = $('#end_date').val();
-            if (start_date != '' && end_date != '') {
+
+            if (start_date != '') {
                 $('#invoices').DataTable().destroy();
-                draw_data(start_date, end_date);
+                draw_data(start_date);
             } else {
                 alert("Date range is Required");
             }
