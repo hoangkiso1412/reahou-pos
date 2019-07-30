@@ -226,7 +226,9 @@ class YearToDate_model extends CI_Model
         (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='09') as sep,
         (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='10') as oct,
         (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='11') as nov,
-        (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='12') as descb FROM geopos_invoices inner join geopos_customers on geopos_customers.id=geopos_invoices.csd WHERE geopos_invoices.status='due' and date_format(geopos_invoices.invoicedate,'%Y')='2019' group by geopos_customers.name");
+        (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='12') as descb 
+        FROM geopos_invoices inner join geopos_customers on geopos_customers.id=geopos_invoices.csd 
+        WHERE geopos_invoices.status='due' and date_format(geopos_invoices.invoicedate,'%Y')='2019' group by csd");
         //$this->db->from($this->table);
         
         //$this->db->where('geopos_invoices.i_class', 0);
@@ -234,23 +236,6 @@ class YearToDate_model extends CI_Model
         //$this->db->group_by('csd');
         //$this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'inner');
         //$this->db->group_by('geopos_invoices.csd');
-
-//         $this->db->query("SELECT 
-// 	cs.name as custName,
-// 	(SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='01') as Jan,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='02') as Feb,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='03') as Mar,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='04') as Apr,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='05') as May,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='06') as Jun,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='07') as Jul,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='08') as Aug,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='09') as Sep,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='10') as Oct,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='11') as Nov,
-//     (SELECT SUM(total) FROM geopos_invoices gi WHERE gi.csd=gim.csd AND date_format(invoicedate,'%m')='12') as Decs
-// FROM geopos_invoices gim inner join geopos_customers cs on cs.id=gim.csd WHERE gim.status='due' and date_format(gim.invoicedate,'%Y')='2019' GROUP BY csd");
-        //$this->db->group_by("geopos_customers.id"); 
     }
 
     function get_datatables($opt = '')
