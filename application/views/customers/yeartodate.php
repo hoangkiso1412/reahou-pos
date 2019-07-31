@@ -31,7 +31,6 @@
                                     echo '<option value="'.$row->year.'">'.$row->year.'</option>';
                                 }
                             ?>
-                           
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -70,31 +69,6 @@
         </div>
     </div>
 </div>
-
-
-<div id="delete_model" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <h4 class="modal-title"><?php echo $this->lang->line('Delete Invoice') ?></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <p><?php echo $this->lang->line('delete this invoice') ?> ?</p>
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="invoices/delete_i">
-                <button type="button" data-dismiss="modal" class="btn btn-primary"
-                        id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
-                <button type="button" data-dismiss="modal"
-                        class="btn"><?php echo $this->lang->line('Cancel') ?></button>
-            </div>
-        </div>
-    </div>
-</div>
 <script type="text/javascript">
     $(document).ready(function () {
         draw_data();
@@ -126,17 +100,16 @@
                         extend: 'excelHtml5',
                         footer: true,
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16]
                         }
                     }
-                ],
+                ]
             });
         };
 
         $('#search').click(function () {
 
             var start_date = $('#start_date').val();
-
             if (start_date != '') {
                 $('#invoices').DataTable().destroy();
                 draw_data(start_date);
