@@ -886,6 +886,15 @@
                                 <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customers"
                                                     data-toggle="dropdown"><?= $this->lang->line('Clients Transactions'); ?></a>
                                 </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customercredit"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Customer Credit'); ?></a>
+                                </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>yeartodate"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Year to date'); ?></a>
+                                </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>sale_summary"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Sale Date Checking'); ?></a>
+                                </li>
                             </ul>
                         </li>
  <li data-menu=""><a class="dropdown-item"

@@ -3,7 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $active_group = 'default';
 $query_builder = TRUE;
-$hostname ='localhost:3307';
+
+// $hostname ='reahou.com';
+// $username ='reahou_website';
+// $password ='website_reahou';
+// $database ='reahou_pos';
+$hostname ='localhost';
 $username ='root';
 $password ='';
 $database ='reahou_pos';
