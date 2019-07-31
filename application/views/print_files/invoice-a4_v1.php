@@ -23,7 +23,7 @@
                 padding: 4mm;
                 border: 0;
                 font-size: 9pt !important;
-                line-height: 14pt;
+                /*line-height: 14pt;*/
                 color: #000;
             }
             
@@ -40,9 +40,13 @@
             
             table {
                 width: 100%;
-                line-height: 16pt;
+                /*line-height: 16pt;*/
                 text-align: left;
                 border-collapse: collapse;
+            }
+            
+            .plist{
+                
             }
             
             .plist tr td {
@@ -186,7 +190,7 @@
             }
             
             .mfill {
-                background-color: #eee;
+                /*background-color: #eee;*/
             }
             
             .descr {
