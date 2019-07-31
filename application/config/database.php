@@ -10,8 +10,8 @@ $query_builder = TRUE;
 // $database ='reahou_pos';
 $hostname ='localhost';
 $username ='root';
-$password ='';
-$database ='reahou_pos';
+$password ='123456';
+$database ='pos_reahou';
 
 $db['default'] = array(
 	'dsn'	=> '',

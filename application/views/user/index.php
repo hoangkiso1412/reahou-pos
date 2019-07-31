@@ -70,12 +70,14 @@
                                                 class="ft-unlock"></i> <?php echo $this->lang->line('login') ?></button>
                                     </form>
                                 </div>
+                                <div class="hidden">
                                 <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1">
                                     <span>Are you a client ?</span></p>
                                 <div class="card-body">
                                     <a href="<?php echo base_url('crm'); ?>" class="btn btn-outline-danger btn-block"><i
                                                 class="ft-user"></i> <?php echo $this->lang->line('customer_login') ?>
                                     </a>
+                                </div>
                                 </div>
                             </div>
                         </div>
