@@ -1,58 +1,81 @@
+<?php
+$rate_input = '';
+if (!$this->aauth->premission(12)) {
+    $rate_input = ' readonly ';
+}
+$tax_input = '';
+if (!$this->aauth->premission(13)) {
+    $tax_input = ' readonly ';
+}
+$discount_input = '';
+if (!$this->aauth->premission(14)) {
+    $discount_input = ' readonly ';
+}
+$shipping_input = '';
+if (!$this->aauth->premission(15)) {
+    $shipping_input = ' readonly ';
+}
+$cancel_enable = 1;
+if (!$this->aauth->premission(16)) {
+    $cancel_enable = 0;
+}
+$e_id = $invoice['eid'];
+?>
 <div class="content-body">
     <div class="card">
         <div class="card-content">
             <div id="notify" class="alert alert-success" style="display:none;">
                 <a href="#" class="close" data-dismiss="alert">&times;</a>
-
+                
                 <div class="message"></div>
             </div>
             <div class="card-body">
                 <form method="post" id="data_form">
-
-
+                    
+                    
                     <div class="row">
-
+                        
                         <div class="col-sm-4">
-
+                            
                         </div>
-
+                        
                         <div class="col-sm-3"></div>
-
+                        
                         <div class="col-sm-2"></div>
-
+                        
                         <div class="col-sm-3">
-
+                            
                         </div>
-
+                        
                     </div>
-
+                    
                     <div class="row">
-
-
+                        
+                        
                         <div class="col-sm-6 cmp-pnl">
                             <div id="customerpanel" class="inner-cmp-pnl">
                                 <div class="form-group row">
                                     <div class="fcol-sm-12">
                                         <h3 class="title">
                                             <?php echo $this->lang->line('Bill To') ?> <a href='#'
-                                                                                          class="btn btn-primary btn-sm round"
-                                                                                          data-toggle="modal"
-                                                                                          data-target="#addCustomer">
+                                               class="btn btn-primary btn-sm round"
+                                               data-toggle="modal"
+                                               data-target="#addCustomer">
                                                 <?php echo $this->lang->line('Add Client') ?>
                                             </a>
                                     </div>
                                 </div>
-
+                                
                                 <div class="form-group row">
                                     <div class="frmSearch col-sm-12"><label for="cst"
                                                                             class="caption"><?php echo $this->lang->line('Search Client'); ?></label>
                                         <input type="text" class="form-control round" name="cst" id="customer-box"
                                                placeholder="Enter Customer Name or Mobile Number to search"
                                                autocomplete="off"/>
-
+                                        
                                         <div id="customer-box-result"></div>
                                     </div>
-
+                                    
                                 </div>
                                 <div id="customer">
                                     <div class="clientinfo">
@@ -62,61 +85,73 @@
                                 <div id="customer_name"><strong>' . $invoice['name'] . '</strong></div>
                             </div>
                             <div class="clientinfo">
-
+                                
                                 <div id="customer_address1"><strong>' . $invoice['address'] . '<br>' . $invoice['city'] . ',' . $invoice['country'] . '</strong></div>
                             </div>
-
+                                
                             <div class="clientinfo">
-
+                                
                                 <div type="text" id="customer_phone">Phone: <strong>' . $invoice['phone'] . '</strong><br>Email: <strong>' . $invoice['email'] . '</strong></div>
                             </div>'; ?>
                                         <hr>
                                         <div id="customer_pass"></div><?php echo $this->lang->line('Warehouse') ?>
                                         <select
-                                                id="s_warehouses"
-                                                class="selectpicker form-control round">
+                                            id="s_warehouses"
+                                            class="selectpicker form-control round">
                                             <?php echo $this->common->default_warehouse();
                                             echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                                 echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                             } ?>
-
+                                            
+                                        </select>
+                                        <hr>
+                                        <div id="seller_pass"></div><?php echo $this->lang->line('seller') ?> <select
+                                            id="s_seller" name='s_seller' 
+                                            class="form-control round">
+                                        <?php 
+                                        $l_employee = $this->employee_model->list_employee();
+                                        echo '<option value="0">No Seller</option>';
+                                        foreach ($l_employee as $row) {
+                                            echo '<option value="' . $row['id'] . '" '.((int)$e_id==(int)$row['id']?'selected':'').' >' . $row['name'] . '</option>';
+                                        } ?>
+                                            
                                         </select>
                                     </div>
-
-
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="col-sm-6 cmp-pnl">
                                 <div class="inner-cmp-pnl">
-
-
+                                    
+                                    
                                     <div class="form-group row">
-
+                                        
                                         <div class="col-sm-12"><span
-                                                    class="red"><?php echo $this->lang->line('Edit Invoice') ?></span>
+                                                class="red"><?php echo $this->lang->line('Edit Invoice') ?></span>
                                             <h3
-                                                    class="title"><?php echo $this->lang->line('Invoice Properties') ?></h3>
+                                                class="title"><?php echo $this->lang->line('Invoice Properties') ?></h3>
                                         </div>
-
+                                        
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6"><label for="invocieno"
                                                                      class="caption"><?php echo $this->lang->line('Invoice Number') ?></label>
-
+                                            
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="icon-file-text-o"
                                                                                      aria-hidden="true"></span></div>
                                                 <input type="text" class="form-control round" placeholder="Invoice #"
                                                        name="invocieno"
                                                        value="<?php echo $invoice['tid']; ?>" readonly> <input
-                                                        type="hidden"
-                                                        name="iid"
-                                                        value="<?php echo $invoice['iid']; ?>">
+                                                       type="hidden"
+                                                       name="iid"
+                                                       value="<?php echo $invoice['iid']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-sm-6"><label for="invocieno"
                                                                      class="caption"><?php echo $this->lang->line('Reference') ?></label>
-
+                                            
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="icon-bookmark-o"
                                                                                      aria-hidden="true"></span></div>
@@ -127,10 +162,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-
+                                        
                                         <div class="col-sm-6"><label for="invociedate"
                                                                      class="caption"><?php echo $this->lang->line('Invoice Date'); ?></label>
-
+                                            
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="icon-calendar4"
                                                                                      aria-hidden="true"></span></div>
@@ -142,7 +177,7 @@
                                         </div>
                                         <div class="col-sm-6"><label for="invocieduedate"
                                                                      class="caption"><?php echo $this->lang->line('Invoice Due Date') ?></label>
-
+                                            
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="icon-calendar-o"
                                                                                      aria-hidden="true"></span></div>
@@ -153,23 +188,23 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label for="taxformat"
                                                    class="caption"><?php echo $this->lang->line('Tax') ?></label>
-                                            <select class="form-control round" onchange="changeTaxFormat(this.value)"
+                                            <select combo-enable='<?php echo trim($tax_input) ?>' class="form-control round" onchange="changeTaxFormat(this.value)"
                                                     id="taxformat">
-
+                                                
                                                 <?php echo $taxlist; ?>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
-
+                                            
                                             <div class="form-group">
                                                 <label for="discountFormat"
                                                        class="caption"><?php echo $this->lang->line('Discount') ?></label>
-                                                <select class="form-control round"
+                                                <select combo-enable='<?php echo trim($discount_input) ?>' class="form-control round"
                                                         onchange="changeDiscountFormat(this.value)"
                                                         id="discountFormat">
                                                     <?php echo '<option value="' . $invoice['format_discount'] . '">' . $this->lang->line('Do not change') . '</option>'; ?>
@@ -185,31 +220,31 @@
                                             <textarea class="form-control round" name="notes"
                                                       rows="2"><?php echo $invoice['notes'] ?></textarea></div>
                                     </div>
-
+                                    
                                 </div>
                             </div>
-
+                            
                         </div>
-
-
+                        
+                        <br>
                         <div id="saman-row">
                             <table class="table-responsive tfr my_stripe">
                                 <thead>
-
-                                <tr class="item_header bg-gradient-directional-blue white">
-                                    <th width="30%"
-                                        class="text-center"><?php echo $this->lang->line('Item Name') ?></th>
-                                    <th width="8%" class="text-center"><?php echo $this->lang->line('Quantity') ?></th>
-                                    <th width="10%" class="text-center"><?php echo $this->lang->line('Rate') ?></th>
-                                    <th width="10%" class="text-center"><?php echo $this->lang->line('Tax(%)') ?></th>
-                                    <th width="10%" class="text-center"><?php echo $this->lang->line('Tax') ?></th>
-                                    <th width="7%" class="text-center"><?php echo $this->lang->line('Discount') ?></th>
-                                    <th width="10%"
-                                        class="text-center"><?php echo $this->lang->line('Amount') . ' (' . $this->config->item('currency'); ?>
-                                        )
-                                    </th>
-                                    <th width="5%" class="text-center"><?php echo $this->lang->line('Action') ?></th>
-                                </tr>
+                                    
+                                    <tr class="item_header bg-gradient-directional-blue white">
+                                        <th width="30%"
+                                            class="text-center"><?php echo $this->lang->line('Item Name') ?></th>
+                                        <th width="8%" class="text-center"><?php echo $this->lang->line('Quantity') ?></th>
+                                        <th width="10%" class="text-center"><?php echo $this->lang->line('Rate') ?></th>
+                                        <th width="10%" class="text-center"><?php echo $this->lang->line('Tax(%)') ?></th>
+                                        <th width="10%" class="text-center"><?php echo $this->lang->line('Tax') ?></th>
+                                        <th width="7%" class="text-center"><?php echo $this->lang->line('Discount') ?></th>
+                                        <th width="10%"
+                                            class="text-center"><?php echo $this->lang->line('Amount') . ' (' . $this->config->item('currency'); ?>
+                                            )
+                                        </th>
+                                        <th width="5%" class="text-center"><?php echo $this->lang->line('Action') ?></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i = 0;
@@ -220,21 +255,21 @@
                         <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-' . $i . '"
                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
                                    autocomplete="off" value="' . amountFormat_general($row['qty']) . '" ><input type="hidden" name="old_product_qty[]" value="' . amountFormat_general($row['qty']) . '" ></td>
-                        <td><input type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '"
+                        <td><input '.$rate_input.' type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '"
                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
                                    autocomplete="off" value="' . edit_amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '"></td>
-                        <td> <input type="text" class="form-control vat" name="product_tax[]" id="vat-' . $i . '"
+                        <td> <input '.$tax_input.' type="text" class="form-control vat" name="product_tax[]" id="vat-' . $i . '"
                                     onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
                                     autocomplete="off"  value="' . amountFormat_general($row['tax']) . '"></td>
                         <td class="text-center" id="texttaxa-' . $i . '">' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '</td>
-                        <td><input type="text" class="form-control discount" name="product_discount[]"
+                        <td><input '.$discount_input.' type="text" class="form-control discount" name="product_discount[]"
                                    onkeypress="return isNumber(event)" id="discount-' . $i . '"
                                    onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off"  value="' . amountFormat_general($row['discount']) . '"></td>
                         <td><span class="currenty">' . $this->config->item('currency') . '</span>
                             <strong><span class="ttlText" id="result-' . $i . '">' . edit_amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '</span></strong></td>
-                        <td class="text-center">
-<button type="button" data-rowid="' . $i . '" class="btn-sm btn-danger removeProd" title="Remove"> <i class="fa fa-minus-square"></i> </button>
-                        </td>
+                        <td class="text-center">'.
+($cancel_enable==1?'<button type="button" data-rowid="' . $i . '" class="btn-sm btn-danger removeProd" title="Remove"> <i class="fa fa-minus-square"></i> </button>':'')
+                        .'</td>
                         <input type="hidden" name="taxa[]" id="taxa-' . $i . '" value="' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
                         <input type="hidden" name="disca[]" id="disca-' . $i . '" value="' . edit_amountExchange_s($row['totaldiscount'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
                         <input type="hidden" class="ttInput" name="product_subtotal[]" id="total-' . $i . '" value="' . edit_amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
@@ -244,114 +279,114 @@
                     </tr> <tr class="desc_p"><td colspan="8"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="' . $this->lang->line('Enter Product description') . '" autocomplete="off">' . $row['product_des'] . '</textarea><br></td></tr>';
                                     $i++;
                                 } ?>
-                                <tr class="last-item-row sub_c">
-                                    <td class="add-row">
-                                        <button type="button" class="btn btn-success"
-
-                                                id="addproduct">
-                                            <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
-                                        </button>
-                                    </td>
-                                    <td colspan="7"></td>
-                                </tr>
-
-                                <tr class="sub_c" style="display: table-row;">
-                                    <td colspan="6" align="right"><input type="hidden"
-                                                                         value="<?php echo edit_amountExchange_s($invoice['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) ?>"
-                                                                         id="subttlform"
-                                                                         name="subtotal"><strong><?php echo $this->lang->line('Total Tax') ?></strong>
-                                    </td>
-                                    <td align="left" colspan="2"><span
+                                    <tr class="last-item-row sub_c">
+                                        <td class="add-row">
+                                            <button type="button" class="btn btn-success"
+                                                    product-rate='<?php echo trim($rate_input) ?>' 
+                                                    tax-rate='<?php echo trim($tax_input) ?>' 
+                                                    discount-rate='<?php echo trim($discount_input) ?>' 
+                                                    id="addproduct">
+                                                <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
+                                            </button>
+                                        </td>
+                                        <td colspan="7"></td>
+                                    </tr>
+                                        
+                                    <tr class="sub_c" style="display: table-row;">
+                                        <td colspan="6" align="right"><input type="hidden"
+                                                                             value="<?php echo edit_amountExchange_s($invoice['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) ?>"
+                                                                             id="subttlform"
+                                                                             name="subtotal"><strong><?php echo $this->lang->line('Total Tax') ?></strong>
+                                        </td>
+                                        <td align="left" colspan="2"><span
                                                 class="currenty lightMode"><?php echo $this->config->item('currency'); ?></span>
-                                        <span id="taxr"
-                                              class="lightMode"><?php echo edit_amountExchange_s($invoice['tax'], $invoice['multi'], $this->aauth->get_user()->loc) ?></span>
-                                    </td>
-                                </tr>
-                                <tr class="sub_c" style="display: table-row;">
-                                    <td colspan="6" align="right">
-                                        <strong><?php echo $this->lang->line('Total Discount') ?></strong></td>
-                                    <td align="left" colspan="2"><span
+                                            <span id="taxr"
+                                                  class="lightMode"><?php echo edit_amountExchange_s($invoice['tax'], $invoice['multi'], $this->aauth->get_user()->loc) ?></span>
+                                        </td>
+                                    </tr>
+                                    <tr class="sub_c" style="display: table-row;">
+                                        <td colspan="6" align="right">
+                                            <strong><?php echo $this->lang->line('Total Discount') ?></strong></td>
+                                        <td align="left" colspan="2"><span
                                                 class="currenty lightMode"><?php echo $this->config->item('currency'); ?></span>
-                                        <span id="discs"
-                                              class="lightMode"><?php echo edit_amountExchange_s($invoice['discount'], $invoice['multi'], $this->aauth->get_user()->loc) ?></span>
-                                    </td>
-                                </tr>
-
-                                <tr class="sub_c" style="display: table-row;">
-                                    <td colspan="6" align="right">
-                                        <strong><?php echo $this->lang->line('Shipping') ?></strong>
-                                    </td>
-                                    <td align="left" colspan="2"><input type="text" class="form-control shipVal"
-                                                                        onkeypress="return isNumber(event)"
-                                                                        placeholder="Value"
-                                                                        name="shipping" autocomplete="off"
-                                                                        onkeyup="billUpyog()"
-                                                                        value="<?php if ($invoice['ship_tax_type'] == 'excl') {
+                                            <span id="discs"
+                                                  class="lightMode"><?php echo edit_amountExchange_s($invoice['discount'], $invoice['multi'], $this->aauth->get_user()->loc) ?></span>
+                                        </td>
+                                    </tr>
+                                        
+                                    <tr class="sub_c" style="display: table-row;">
+                                        <td colspan="6" align="right">
+                                            <strong><?php echo $this->lang->line('Shipping') ?></strong>
+                                        </td>
+                                        <td align="left" colspan="2"><input <?php echo $shipping_input ?> type="text" class="form-control shipVal"
+                                                                                                          onkeypress="return isNumber(event)"
+                                                                                                          placeholder="Value"
+                                                                                                          name="shipping" autocomplete="off"
+                                                                                                          onkeyup="billUpyog()"
+                                                                                                          value="<?php if ($invoice['ship_tax_type'] == 'excl') {
                                                                             $invoice['shipping'] = $invoice['shipping'] - $invoice['ship_tax'];
                                                                         }
                                                                         echo edit_amountExchange_s($invoice['shipping'], $invoice['multi'], $this->aauth->get_user()->loc); ?>">( <?= $this->lang->line('Tax') ?> <?= $this->config->item('currency'); ?>
-                                        <span id="ship_final"><?= edit_amountExchange_s($invoice['ship_tax'], $invoice['multi'], $this->aauth->get_user()->loc) ?> </span>
-                                        )
-                                    </td>
-                                </tr>
-
-                                <tr class="sub_c" style="display: table-row;">
-                                    <td colspan="2"><?php if ($exchange['active'] == 1){
+                                            <span id="ship_final"><?= edit_amountExchange_s($invoice['ship_tax'], $invoice['multi'], $this->aauth->get_user()->loc) ?> </span>
+                                            )
+                                        </td>
+                                    </tr>
+                                    <tr class="sub_c" style="display: table-row;">
+                                        <td colspan="6" align="right">
+                                            <strong> <?php echo $this->lang->line('Extra') . ' ' . $this->lang->line('Discount') ?></strong>
+                                        </td>
+                                        <td align="left" colspan="2"><input <?php echo $discount_input ?> type="text"
+                                                                                                          class="form-control discVal"
+                                                                                                          onkeypress="return isNumber(event)"
+                                                                                                          placeholder="Value"
+                                                                                                          name="disc_val" autocomplete="off"
+                                                                                                          onkeyup="billUpyog()"
+                                                                                                          value="<?= amountExchange_s($invoice['discount_rate'], $invoice['multi'], $this->aauth->get_user()->loc); ?>">
+                                            <input type="hidden"
+                                                   name="after_disc" id="after_disc">
+                                            ( <?= $this->config->item('currency'); ?>
+                                            <span id="disc_final"><?= amountExchange_s((($invoice['discount'] / $invoice['discount_rate']) * 100) - $invoice['total'], $invoice['multi'], $this->aauth->get_user()->loc); ?></span>
+                                            )
+                                        </td>
+                                    </tr>
+                                    <tr class="sub_c" style="display: table-row;">
+                                        <td colspan="2"><?php if ($exchange['active'] == 1){
                                         echo $this->lang->line('Payment Currency client') . ' <small>' . $this->lang->line('based on live market') ?></small>
-                                        <select name="mcurrency"
+                                            <select name="mcurrency"
                                                 class="selectpicker form-control">
-
+                                                        
                                             <?php
                                             echo '<option value="' . $invoice['multi'] . '">Do not change</option><option value="0">None</option>';
                                             foreach ($currency as $row) {
-
+                                                
                                                 echo '<option value="' . $row['id'] . '">' . $row['symbol'] . ' (' . $row['code'] . ')</option>';
                                             } ?>
-
-                                        </select><?php } ?></td>
-                                    <td colspan="4" align="right"><strong><?php echo $this->lang->line('Grand Total') ?>
-                                            (<span
+                                                
+                                            </select><?php } ?></td>
+                                        <td colspan="4" align="right"><strong><?php echo $this->lang->line('Grand Total') ?>
+                                                (<span
                                                     class="currenty lightMode"><?php echo $this->config->item('currency'); ?></span>)</strong>
-                                    </td>
-                                    <td align="left" colspan="2"><input type="text" name="total" class="form-control"
-                                                                        id="invoiceyoghtml"
-                                                                        value="<?= edit_amountExchange_s($invoice['total'], $invoice['multi'], $this->aauth->get_user()->loc); ?>"
-                                                                        readonly="">
-                                    </td>
-                                </tr>
-                                <tr class="sub_c" style="display: table-row;">
-                                    <td colspan="6" align="right">
-                                        <strong> <?php echo $this->lang->line('Extra') . ' ' . $this->lang->line('Discount') ?></strong>
-                                    </td>
-                                    <td align="left" colspan="2"><input type="text"
-                                                                        class="form-control form-control-sm discVal"
-                                                                        onkeypress="return isNumber(event)"
-                                                                        placeholder="Value"
-                                                                        name="disc_val" autocomplete="off"
-                                                                        onkeyup="billUpyog()"
-                                                                        value="<?= amountExchange_s($invoice['discount_rate'], $invoice['multi'], $this->aauth->get_user()->loc); ?>">
-                                        <input type="hidden"
-                                               name="after_disc" id="after_disc">
-                                        ( <?= $this->config->item('currency'); ?>
-                                        <span id="disc_final"><?= amountExchange_s((($invoice['discount'] / $invoice['discount_rate']) * 100) - $invoice['total'], $invoice['multi'], $this->aauth->get_user()->loc); ?></span>
-                                        )
-                                    </td>
-                                </tr>
-
-                                <tr class="sub_c" style="display: table-row;">
-                                    <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select
+                                        </td>
+                                        <td align="left" colspan="2"><input type="text" name="total" class="form-control"
+                                                                            id="invoiceyoghtml"
+                                                                            value="<?= edit_amountExchange_s($invoice['total'], $invoice['multi'], $this->aauth->get_user()->loc); ?>"
+                                                                            readonly="">
+                                        </td>
+                                    </tr>
+                                    <tr class="sub_c" style="display: table-row;">
+                                        <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select
                                                 name="pterms"
                                                 class="selectpicker form-control"><?php echo '<option value="' . $invoice['termid'] . '">*' . $invoice['termtit'] . '</option>';
                                             foreach ($terms as $row) {
                                                 echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                             } ?>
-                                        </select></td>
-                                    <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn"
-                                                                         value="<?php echo $this->lang->line('Update') ?>"
-                                                                         id="submit-data"
-                                                                         data-loading-text="Updating...">
-                                    </td>
-                                </tr>
+                                            </select></td>
+                                        <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn"
+                                                                             value="<?php echo $this->lang->line('Update') ?>"
+                                                                             id="submit-data"
+                                                                             data-loading-text="Updating...">
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -374,126 +409,126 @@
                                id="ship_taxtype">
                         <input type="hidden" value="<?= amountFormat_general($invoice['ship_tax']); ?>" name="ship_tax"
                                id="ship_tax">
-                </form>
+                        </form>
+                    </div>
+                        
             </div>
-
-        </div>
-
-        <div class="modal fade" id="addCustomer" role="dialog">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content ">
-                    <form method="post" id="product_action" class="form-horizontal">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-
-                            <h4 class="modal-title"
-                                id="myModalLabel"><?php echo $this->lang->line('Add Customer') ?></h4>
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only"><?php echo $this->lang->line('Close') ?></span>
-                            </button>
-                        </div>
-
-                        <!-- Modal Body -->
-                        <div class="modal-body">
-                            <p id="statusMsg"></p><input type="hidden" name="mcustomer_id" id="mcustomer_id" value="0">
-                            <div class="row">
-                                <div class="col">
-                                    <h5><?php echo $this->lang->line('Billing Address') ?></h5>
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="name"><?php echo $this->lang->line('Name') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="Name"
-                                                   class="form-control margin-bottom" id="mcustomer_name" name="name"
-                                                   required>
+                
+            <div class="modal fade" id="addCustomer" role="dialog">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content ">
+                        <form method="post" id="product_action" class="form-horizontal">
+                            <!-- Modal Header -->
+                                <div class="modal-header">
+                                
+                                <h4 class="modal-title"
+                                    id="myModalLabel"><?php echo $this->lang->line('Add Customer') ?></h4>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only"><?php echo $this->lang->line('Close') ?></span>
+                                </button>
+                            </div>
+                                
+                            <!-- Modal Body -->
+                            <div class="modal-body">
+                                <p id="statusMsg"></p><input type="hidden" name="mcustomer_id" id="mcustomer_id" value="0">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5><?php echo $this->lang->line('Billing Address') ?></h5>
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="name"><?php echo $this->lang->line('Name') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <input type="text" placeholder="Name"
+                                                       class="form-control margin-bottom" id="mcustomer_name" name="name"
+                                                       required>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="phone"><?php echo $this->lang->line('Phone') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="Phone"
-                                                   class="form-control margin-bottom" name="phone" id="mcustomer_phone">
+                                            
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="phone"><?php echo $this->lang->line('Phone') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <input type="text" placeholder="Phone"
+                                                       class="form-control margin-bottom" name="phone" id="mcustomer_phone">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="email"><?php echo $this->lang->line('Email') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <input type="email" placeholder="Email"
-                                                   class="form-control margin-bottom crequired" name="email"
-                                                   id="mcustomer_email">
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="email"><?php echo $this->lang->line('Email') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <input type="email" placeholder="Email"
+                                                       class="form-control margin-bottom crequired" name="email"
+                                                       id="mcustomer_email">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="address"><?php echo $this->lang->line('Address') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="Address"
-                                                   class="form-control margin-bottom " name="address"
-                                                   id="mcustomer_address1">
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="address"><?php echo $this->lang->line('Address') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <input type="text" placeholder="Address"
+                                                       class="form-control margin-bottom " name="address"
+                                                       id="mcustomer_address1">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-
-
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="City"
-                                                   class="form-control margin-bottom" name="city" id="mcustomer_city">
+                                            <div class="form-group row">
+                                            
+                                            
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="City"
+                                                       class="form-control margin-bottom" name="city" id="mcustomer_city">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="Region" id="region"
+                                                       class="form-control margin-bottom" name="region">
+                                            </div>
+                                                
                                         </div>
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="Region" id="region"
-                                                   class="form-control margin-bottom" name="region">
+                                            
+                                            <div class="form-group row">
+                                            
+                                            
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="Country"
+                                                       class="form-control margin-bottom" name="country"
+                                                       id="mcustomer_country">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="PostBox" id="postbox"
+                                                       class="form-control margin-bottom" name="postbox">
+                                            </div>
                                         </div>
-
-                                    </div>
-
-                                    <div class="form-group row">
-
-
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="Country"
-                                                   class="form-control margin-bottom" name="country"
-                                                   id="mcustomer_country">
+                                            
+                                            <div class="form-group row">
+                                            
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="Company"
+                                                       class="form-control margin-bottom" name="company">
+                                            </div>
+                                                
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="TAX ID"
+                                                       class="form-control margin-bottom" name="taxid" id="mcustomer_city">
+                                            </div>
+                                                
+                                                
                                         </div>
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="PostBox" id="postbox"
-                                                   class="form-control margin-bottom" name="postbox">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="Company"
-                                                   class="form-control margin-bottom" name="company">
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="TAX ID"
-                                                   class="form-control margin-bottom" name="taxid" id="mcustomer_city">
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="customergroup"><?php echo $this->lang->line('Group') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <select name="customergroup" class="form-control">
+                                            
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="customergroup"><?php echo $this->lang->line('Group') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <select name="customergroup" class="form-control">
                                                 <?php
                                                 foreach ($customergrouplist as $row) {
                                                     $cid = $row['id'];
@@ -501,128 +536,128 @@
                                                     echo "<option value='$cid'>$title</option>";
                                                 }
                                                 ?>
-                                            </select>
-
-
+                                                </select>
+                                                    
+                                                    
+                                            </div>
                                         </div>
+                                            
+                                            
                                     </div>
-
-
-                                </div>
-
-                                <!-- shipping -->
-                                <div class="col">
-                                    <h5><?php echo $this->lang->line('Shipping Address') ?></h5>
-                                    <div class="form-group row">
-
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="customer1s"
-                                                   id="copy_address">
-                                            <label class="custom-control-label"
-                                                   for="copy_address"><?php echo $this->lang->line('Same As Billing') ?></label>
-                                        </div>
-
-                                        <div class="col-sm-10">
+                                        
+                                    <!-- shipping -->
+                                    <div class="col">
+                                        <h5><?php echo $this->lang->line('Shipping Address') ?></h5>
+                                            <div class="form-group row">
+                                            
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" name="customer1s"
+                                                       id="copy_address">
+                                                <label class="custom-control-label"
+                                                       for="copy_address"><?php echo $this->lang->line('Same As Billing') ?></label>
+                                            </div>
+                                                
+                                            <div class="col-sm-10">
                                             <?php echo $this->lang->line("leave Shipping Address") ?>
+                                            </div>
                                         </div>
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="name_s"><?php echo $this->lang->line('Name') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <input type="text" placeholder="Name"
+                                                       class="form-control margin-bottom" id="mcustomer_name_s"
+                                                       name="name_s"
+                                                       required>
+                                            </div>
+                                        </div>
+                                            
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="phone_s"><?php echo $this->lang->line('Phone') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <input type="text" placeholder="Phone"
+                                                       class="form-control margin-bottom" name="phone_s"
+                                                       id="mcustomer_phone_s">
+                                            </div>
+                                        </div>
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="email_s"><?php echo $this->lang->line('Email') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <input type="email" placeholder="Email"
+                                                       class="form-control margin-bottom" name="email_s"
+                                                       id="mcustomer_email_s">
+                                            </div>
+                                        </div>
+                                            <div class="form-group row">
+                                            
+                                            <label class="col-sm-2 col-form-label"
+                                            for="address_s"><?php echo $this->lang->line('Address') ?></label>
+                                                       
+                                            <div class="col-sm-10">
+                                                <input type="text" placeholder="Address"
+                                                       class="form-control margin-bottom " name="address_s"
+                                                       id="mcustomer_address1_s">
+                                            </div>
+                                        </div>
+                                            <div class="form-group row">
+                                            
+                                            
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="City"
+                                                       class="form-control margin-bottom" name="city_s"
+                                                       id="mcustomer_city_s">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="Region" id="region_s"
+                                                       class="form-control margin-bottom" name="region_s">
+                                            </div>
+                                                
+                                        </div>
+                                            
+                                            <div class="form-group row">
+                                            
+                                            
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="Country"
+                                                       class="form-control margin-bottom" name="country_s"
+                                                       id="mcustomer_country_s">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="PostBox" id="postbox_s"
+                                                       class="form-control margin-bottom" name="postbox_s">
+                                            </div>
+                                        </div>
+                                            
+                                            
                                     </div>
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="name_s"><?php echo $this->lang->line('Name') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="Name"
-                                                   class="form-control margin-bottom" id="mcustomer_name_s"
-                                                   name="name_s"
-                                                   required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="phone_s"><?php echo $this->lang->line('Phone') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="Phone"
-                                                   class="form-control margin-bottom" name="phone_s"
-                                                   id="mcustomer_phone_s">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="email_s"><?php echo $this->lang->line('Email') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <input type="email" placeholder="Email"
-                                                   class="form-control margin-bottom" name="email_s"
-                                                   id="mcustomer_email_s">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-
-                                        <label class="col-sm-2 col-form-label"
-                                               for="address_s"><?php echo $this->lang->line('Address') ?></label>
-
-                                        <div class="col-sm-10">
-                                            <input type="text" placeholder="Address"
-                                                   class="form-control margin-bottom " name="address_s"
-                                                   id="mcustomer_address1_s">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-
-
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="City"
-                                                   class="form-control margin-bottom" name="city_s"
-                                                   id="mcustomer_city_s">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="Region" id="region_s"
-                                                   class="form-control margin-bottom" name="region_s">
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group row">
-
-
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="Country"
-                                                   class="form-control margin-bottom" name="country_s"
-                                                   id="mcustomer_country_s">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="PostBox" id="postbox_s"
-                                                   class="form-control margin-bottom" name="postbox_s">
-                                        </div>
-                                    </div>
-
-
+                                        
                                 </div>
-
                             </div>
-                        </div>
-                        <!-- Modal Footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
-                            <input type="submit" id="mclient_add" class="btn btn-primary submitBtn" value="ADD"/>
-                        </div>
-                    </form>
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
+                                <input type="submit" id="mclient_add" class="btn btn-primary submitBtn" value="ADD"/>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <script type="text/javascript"> $('.editdate').datepicker({
+                
+            <script type="text/javascript"> $('.editdate').datepicker({
                 autoHide: true,
-                format: '<?php echo $this->config->item('dformat2'); ?>'
+                        format: '<?php echo $this->config->item('dformat2'); ?>'
             });
-
+            
             window.onload = function () {
                 billUpyog();
             };
-        </script>
+            </script>
