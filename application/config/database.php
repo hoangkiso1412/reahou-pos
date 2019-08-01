@@ -4,11 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-// $hostname ='reahou.com';
-// $username ='reahou_website';
-// $password ='website_reahou';
-// $database ='reahou_pos';
-$hostname ='localhost';
+//$hostname ='reahou.com';
+//$username ='reahou_website';
+//$password ='website_reahou';
+//$database ='reahou_pos';
+$hostname ='localhost:3307';
 $username ='root';
 $password ='123456';
 $database ='pos_reahou';
