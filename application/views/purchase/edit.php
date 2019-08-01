@@ -192,15 +192,17 @@
                                 <tbody>
                                 <?php $i = 0;
                                 foreach ($products as $row) {
-                                    echo '<tr >
+                                    echo '<tr>
                         <td><input type="text" class="form-control" name="product_name[]" placeholder="Enter Product name or Code"  value="' . $row['product'] . '">
                         </td>
                         <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-' . $i . '"
                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
                                    autocomplete="off" value="' . amountFormat_general($row['qty']) . '" ><input type="hidden" name="old_product_qty[]" value="' . amountFormat_general($row['qty']) . '" ></td>
-                        <td><input type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '"
+                        <td>
+                        <input type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '"
                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
-                                   autocomplete="off" value="' . edit_amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '"></td>
+                                   autocomplete="off" value="' . edit_amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
+                        </td>
                         <td> <input type="text" class="form-control vat" name="product_tax[]" id="vat-' . $i . '"
                                     onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
                                     autocomplete="off"  value="' . amountFormat_general($row['tax']) . '"></td>

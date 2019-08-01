@@ -205,16 +205,52 @@
                                 <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
                                            autocomplete="off" value="1"></td>
-                                <td><input type="text" class="form-control req prc" name="product_price[]" id="price-0"
+                                <td>
+                                    <?php 
+                                        if ($this->aauth->premission(20)) {
+                                    ?>
+                                    <input type="text" class="form-control req prc" name="product_price[]" id="price-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
-                                           autocomplete="off"></td>
-                                <td><input type="text" class="form-control vat " name="product_tax[]" id="vat-0"
+                                           autocomplete="off">
+                                    <?php 
+                                        }else{
+                                    ?>
+                                    <input type="text" readonly class="form-control req prc" name="product_price[]" id="price-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
-                                           autocomplete="off"></td>
+                                           autocomplete="off">
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <?php 
+                                        if ($this->aauth->premission(21)) {
+                                    ?>
+                                    <input type="text" class="form-control vat " name="product_tax[]" id="vat-0"
+                                           onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
+                                           autocomplete="off">
+                                    <?php 
+                                        }else{
+                                    ?>
+                                     <input type="text" class="form-control vat " readonly name="product_tax[]" id="vat-0"
+                                           onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
+                                           autocomplete="off">
+                                    <?php } ?>
+                                </td>
                                 <td class="text-center" id="texttaxa-0">0</td>
-                                <td><input type="text" class="form-control discount" name="product_discount[]"
+                                <td>
+                                <?php 
+                                    if ($this->aauth->premission(22)) {
+                                ?>
+                                    <input type="text" class="form-control discount" name="product_discount[]"
                                            onkeypress="return isNumber(event)" id="discount-0"
-                                           onkeyup="rowTotal('0'), billUpyog()" autocomplete="off"></td>
+                                           onkeyup="rowTotal('0'), billUpyog()" autocomplete="off">
+                                <?php 
+                                    }else{
+                                ?>
+                                    <input readonly type="text" class="form-control discount" name="product_discount[]"
+                                           onkeypress="return isNumber(event)" id="discount-0"
+                                           onkeyup="rowTotal('0'), billUpyog()" autocomplete="off">
+                                 <?php } ?>
+                                </td>
                                 <td><span class="currenty"><?php echo $this->config->item('currency'); ?></span>
                                     <strong><span class='ttlText' id="result-0">0</span></strong></td>
                                 <td class="text-center">
@@ -263,11 +299,24 @@
                             <tr class="sub_c" style="display: table-row;">
                                 <td colspan="6" align="right">
                                     <strong><?php echo $this->lang->line('Shipping') ?></strong></td>
-                                <td align="left" colspan="2"><input type="text" class="form-control shipVal"
+                                <td align="left" colspan="2">
+                                <?php 
+                                    if ($this->aauth->premission(23)) {
+                                ?>
+                                    <input type="text" class="form-control shipVal"
                                                                     onkeypress="return isNumber(event)"
                                                                     placeholder="Value"
                                                                     name="shipping" autocomplete="off"
                                                                     onkeyup="billUpyog();">
+                                <?php
+                                    }else{
+                                ?>
+                                    <input type="text" readonly class="form-control shipVal"
+                                                                    onkeypress="return isNumber(event)"
+                                                                    placeholder="Value"
+                                                                    name="shipping" autocomplete="off"
+                                                                    onkeyup="billUpyog();">
+                                <?php } ?>
                                     ( <?php echo $this->lang->line('Tax') ?> <?= $this->config->item('currency'); ?>
                                     <span id="ship_final">0</span> )
                                 </td>
