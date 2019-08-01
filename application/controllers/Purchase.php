@@ -229,7 +229,6 @@ class Purchase extends CI_Controller
 
     public function ajax_list()
     {
-
         $list = $this->purchase->get_datatables();
         $data = array();
 

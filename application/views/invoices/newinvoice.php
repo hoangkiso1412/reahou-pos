@@ -1,3 +1,22 @@
+<?php
+$rate_input = '';
+if (!$this->aauth->premission(12)) {
+    $rate_input = ' readonly ';
+}
+$tax_input = '';
+if (!$this->aauth->premission(13)) {
+    $tax_input = ' readonly ';
+}
+$discount_input = '';
+if (!$this->aauth->premission(14)) {
+    $discount_input = ' readonly ';
+}
+$shipping_input = '';
+if (!$this->aauth->premission(15)) {
+    $shipping_input = ' readonly ';
+}
+$e_id = $this->aauth->get_user()->id;
+?>
 <div class="content-body">
     <div class="card">
         <div class="card-content">
@@ -52,6 +71,18 @@
                                         <?php echo $this->common->default_warehouse();
                                         echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                        } ?>
+
+                                    </select>
+                                    <hr>
+                                    <div id="seller_pass"></div><?php echo $this->lang->line('seller') ?> <select
+                                            id="s_seller" name='s_seller' 
+                                            class="form-control round">
+                                        <?php 
+                                        $l_employee = $this->employee_model->list_employee();
+                                        echo '<option value="0">No Seller</option>';
+                                        foreach ($l_employee as $row) {
+                                            echo '<option value="' . $row['id'] . '" '.((int)$e_id==(int)$row['id']?'selected':'').' >' . $row['name'] . '</option>';
                                         } ?>
 
                                     </select>
@@ -125,7 +156,7 @@
                                     <div class="col-sm-6">
                                         <label for="taxformat"
                                                class="caption"><?php echo $this->lang->line('Tax') ?></label>
-                                        <select class="form-control round"
+                                        <select combo-enable='<?php echo trim($tax_input) ?>' class="form-control round"
                                                 onchange="changeTaxFormat(this.value)"
                                                 id="taxformat">
 
@@ -137,7 +168,7 @@
                                         <div class="form-group">
                                             <label for="discountFormat"
                                                    class="caption"><?php echo $this->lang->line('Discount') ?></label>
-                                            <select class="form-control round"
+                                            <select combo-enable='<?php echo trim($discount_input) ?>' class="form-control round"
                                                     onchange="changeDiscountFormat(this.value)"
                                                     id="discountFormat">
 
@@ -188,14 +219,14 @@
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
                                            autocomplete="off" value="1"><input type="hidden" id="alert-0" value=""
                                                                                name="alert[]"></td>
-                                <td><input type="text" class="form-control req prc" name="product_price[]" id="price-0"
+                                <td><input <?php echo $rate_input ?> type="text" class="form-control req prc" name="product_price[]" id="price-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
                                            autocomplete="off"></td>
-                                <td><input type="text" class="form-control vat " name="product_tax[]" id="vat-0"
+                                <td><input <?php echo $tax_input ?> type="text" class="form-control vat " name="product_tax[]" id="vat-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
                                            autocomplete="off"></td>
                                 <td class="text-center" id="texttaxa-0">0</td>
-                                <td><input type="text" class="form-control discount" name="product_discount[]"
+                                <td><input <?php echo $discount_input ?> type="text" class="form-control discount" name="product_discount[]"
                                            onkeypress="return isNumber(event)" id="discount-0"
                                            onkeyup="rowTotal('0'), billUpyog()" autocomplete="off"></td>
                                 <td><span class="currenty"><?= currency($this->aauth->get_user()->loc); ?></span>
@@ -218,8 +249,10 @@
 
                             <tr class="last-item-row sub_c">
                                 <td class="add-row">
-                                    <button type="button" class="btn btn-success" aria-label="Left Align"
-                                            id="addproduct">
+                                    <button type="button" class="btn btn-success" aria-label="Left Align" 
+                                            tax-rate='<?php echo trim($tax_input) ?>' 
+                                            discount-rate='<?php echo trim($discount_input) ?>' 
+                                            id="addproduct" product-rate='<?php echo trim($rate_input) ?>'>
                                         <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
                                     </button>
                                 </td>
@@ -248,7 +281,7 @@
                             <tr class="sub_c" style="display: table-row;">
                                 <td colspan="6" align="right">
                                     <strong><?php echo $this->lang->line('Shipping') ?></strong></td>
-                                <td align="left" colspan="2"><input type="text" class="form-control shipVal"
+                                <td align="left" colspan="2"><input <?php echo $shipping_input ?> type="text" class="form-control shipVal"
                                                                     onkeypress="return isNumber(event)"
                                                                     placeholder="Value"
                                                                     name="shipping" autocomplete="off"
@@ -261,8 +294,8 @@
                                 <td colspan="6" align="right">
                                     <strong> <?php echo $this->lang->line('Extra') . ' ' . $this->lang->line('Discount') ?></strong>
                                 </td>
-                                <td align="left" colspan="2"><input type="text"
-                                                                    class="form-control form-control-sm discVal"
+                                <td align="left" colspan="2"><input <?php echo $discount_input ?> type="text"
+                                                                    class="form-control discVal"
                                                                     onkeypress="return isNumber(event)"
                                                                     placeholder="Value"
                                                                     name="disc_val" autocomplete="off" value="0"

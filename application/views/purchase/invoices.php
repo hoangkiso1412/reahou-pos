@@ -87,8 +87,14 @@
                 <div class="modal-footer">
                     <input type="hidden" id="object-id" value="">
                     <input type="hidden" id="action-url" value="purchase/delete_i">
+                    <?php
+                        if ($this->aauth->premission(24)) {
+                    ?>
                     <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete-confirm">Delete
                     </button>
+                    <?php 
+                        }
+                    ?>
                     <button type="button" data-dismiss="modal" class="btn">Cancel</button>
                 </div>
             </div>

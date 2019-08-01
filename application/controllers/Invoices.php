@@ -49,6 +49,7 @@ class Invoices extends CI_Controller
     //create invoice
     public function create()
     {
+        $this->load->model('employee_model');
         $this->load->model('customers_model', 'customers');
         $this->load->model('plugins_model', 'plugins');
         $data['exchange'] = $this->plugins->universal_api(5);
@@ -70,8 +71,16 @@ class Invoices extends CI_Controller
     //edit invoice
     public function edit()
     {
-
+        $this->load->model('employee_model');
         $tid = intval($this->input->get('id'));
+        if (!$this->aauth->premission(17)) {
+            if((int)$tid>0){
+                redirect("invoices/view?id=$tid");
+            }
+            else{
+                redirect("dashboard");
+            }
+        }
         $data['id'] = $tid;
         $data['title'] = "Edit Invoice $tid";
         $this->load->model('customers_model', 'customers');
@@ -108,6 +117,7 @@ class Invoices extends CI_Controller
     //action
     public function action()
     {
+        $eid = $this->input->post('s_seller');
         $currency = $this->input->post('mcurrency');
         $customer_id = $this->input->post('customer_id');
         $invocieno = $this->input->post('invocieno');
@@ -146,7 +156,7 @@ class Invoices extends CI_Controller
         //Invoice Data
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
-        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency, 'loc' => $this->aauth->get_user()->loc);
+        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id,'eid'=>$eid, 'modifier' => $this->aauth->get_user()->id, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency, 'loc' => $this->aauth->get_user()->loc);
         $invocieno2 = $invocieno;
         if ($this->db->insert('geopos_invoices', $data)) {
             $invocieno = $this->db->insert_id();
@@ -305,6 +315,13 @@ class Invoices extends CI_Controller
         $list = $this->invocies->get_datatables($this->limited);
         $data = array();
         $no = $this->input->post('start');
+        
+        $cancel_enable_pre = '<a href="#" data-object-id="';
+        $cancel_enable_suf = '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
+        if (!$this->aauth->premission(16)) {
+            $cancel_enable_pre = '<a href="#" suf-id="';
+            $cancel_enable_suf = '" class="hidden"></a>';
+        }
         foreach ($list as $invoices) {
             $no++;
             $row = array();
@@ -315,7 +332,7 @@ class Invoices extends CI_Controller
             $row[] = dateformat($invoices->invoicedate);
             $row[] = amountExchange($invoices->total, 0, $this->aauth->get_user()->loc);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
-            $row[] = '<a href="' . base_url("invoices/view?id=$invoices->id") . '" class="btn btn-success btn-sm" title="View"><i class="fa fa-eye"></i></a>&nbsp;<a href="' . base_url("invoices/printinvoice?id=$invoices->id") . '&d=1" class="btn btn-info btn-sm"  title="Download"><span class="fa fa-download"></span></a> <a href="#" data-object-id="' . $invoices->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
+            $row[] = '<a href="' . base_url("invoices/view?id=$invoices->id") . '" class="btn btn-success btn-sm" title="View"><i class="fa fa-eye"></i></a>&nbsp;<a href="' . base_url("invoices/printinvoice?id=$invoices->id") . '&d=1" class="btn btn-info btn-sm"  title="Download"><span class="fa fa-download"></span></a> '.$cancel_enable_pre.$invoices->id.$cancel_enable_suf;
             $data[] = $row;
         }
         $output = array(
@@ -392,7 +409,7 @@ class Invoices extends CI_Controller
 
     public function delete_i()
     {
-        if ($this->aauth->premission(11)) {
+        if ($this->aauth->premission(16)) {
             $id = $this->input->post('deleteid');
 
             if ($this->invocies->invoice_delete($id, $this->limited)) {
@@ -411,6 +428,7 @@ class Invoices extends CI_Controller
 
     public function editaction()
     {
+        $eid = $this->input->post('s_seller');
         $customer_id = $this->input->post('customer_id');
         $invocieno = $this->input->post('invocieno');
         $iid = $this->input->post('iid');
@@ -434,7 +452,7 @@ class Invoices extends CI_Controller
         $i = 0;
         if ($this->limited) {
             $employee = $this->invocies->invoice_details($iid, $this->limited);
-            if ($this->aauth->get_user()->id != $employee['eid']) exit();
+            if ($this->aauth->get_user()->id != $employee['modifier']) exit();
         }
         if ($discountFormat == '0') {
             $discstatus = 0;
@@ -451,7 +469,7 @@ class Invoices extends CI_Controller
         $transok = true;
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
-        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => 0, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency);
+        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => 0, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency,'modifier'=>$this->aauth->get_user()->id,'eid'=>$eid);
         $this->db->set($data);
         $this->db->where('id', $iid);
 

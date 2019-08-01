@@ -172,7 +172,7 @@
                         extend: 'excelHtml5',
                         footer: true,
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
                         }
                     }
                 ],
@@ -180,7 +180,7 @@
         };
 
         $('#search').click(function () {
-            alert('test');
+           
             var start_date = $('#start_date').val();
             var end_date = $('#end_date').val();
             if (start_date != '' && end_date != '') {
