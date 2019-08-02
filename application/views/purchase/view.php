@@ -1,3 +1,21 @@
+<?php
+$cancel_enable = 1;
+if (!$this->aauth->premission(24)) {
+    $cancel_enable = 0;
+}
+$edit_enable = 1;
+if (!$this->aauth->premission(25)) {
+    $edit_enable = 0;
+}
+$payment_enable = 1;
+if (!$this->aauth->premission(26)) {
+    $payment_enable = 0;
+}
+$change_status_enable = 1;
+if (!$this->aauth->premission(27)) {
+    $change_status_enable = 0;
+}
+?>
 <div class="content-body">
     <div class="card">
         <div class="card-content">
@@ -16,15 +34,14 @@
                         if ($invoice['status'] != 'canceled') { ?>
                             <div class="title-action">
                             <?php 
-                            if ($this->aauth->premission(25)) {
+                            if ($edit_enable==1) {
                             ?>
-                            <a href="<?php echo 'edit?id=' . $invoice['iid']; ?>" class="btn btn-warning"><i
-                                        class="fa fa-pencil"></i> <?php echo $this->lang->line('Edit Order') ?> </a>
+                            
                             <?php 
                             }
                             ?>
                             <?php 
-                            if ($this->aauth->premission(26)) {
+                            if ($payment_enable==1) {
                             ?>
                             <a href="#part_payment" data-toggle="modal" data-remote="false" data-type="reminder"
                                class="btn btn-large btn-success" title="Partial Payment"
@@ -66,7 +83,7 @@
                                         class="fa fa-globe"></i> <?php echo $this->lang->line('Public Preview') ?>
                             </a>
                             <?php 
-                            if ($this->aauth->premission(27)) {
+                            if ($change_status_enable==1) {
                             ?>
                             <a href="#pop_model" data-toggle="modal" data-remote="false"
                                class="btn btn-large btn-success" title="Change Status"
@@ -75,7 +92,7 @@
                             }
                             ?>
                             <?php 
-                            if ($this->aauth->premission(24)) {
+                            if ($cancel_enable==1) {
                             ?>
                             <a href="#cancel-bill" class="btn btn-danger" id="cancel-bill_p"><i
                                         class="fa fa-minus-circle"> </i> <?php echo $this->lang->line('Cancel') ?>

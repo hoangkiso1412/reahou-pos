@@ -157,7 +157,7 @@ $e_id = $this->aauth->get_user()->id;
                                         <div class="col-sm-6">
                                             <label for="taxformat"
                                                    class="caption"><?php echo $this->lang->line('Tax') ?></label>
-                                            <select class="form-control round" combo-enable='<?php echo trim($tax_input) ?>'  onchange="changeTaxFormat(this.value)"
+                                            <select class="form-control round" combo-enable='<?php echo trim($discount_input) ?>'  onchange="changeTaxFormat(this.value)"
                                                     id="taxformat">
 
                                                 <?php echo $taxlist; ?>
