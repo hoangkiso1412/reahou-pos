@@ -88,7 +88,10 @@ class Invoices extends CI_Controller
         $data['terms'] = $this->invocies->billingterms();
         $data['currency'] = $this->invocies->currencies();
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']['id']) $data['products'] = $this->invocies->invoice_products($tid);
+        if ($data['invoice']['id']){
+            $data['products'] = $this->invocies->invoice_products($tid,0);
+            $data['products_bonus'] = $this->invocies->invoice_products($tid,1);
+        }
         $head['title'] = "Edit Invoice #$tid";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->invocies->warehouses();
@@ -178,6 +181,7 @@ class Invoices extends CI_Controller
             $product_unit = $this->input->post('unit');
             $product_hsn = $this->input->post('hsn', true);
             $product_alert = $this->input->post('alert');
+            $ibonus = $this->input->post('ibonus');
             foreach ($pid as $key => $value) {
                 $total_discount += numberClean(@$ptotal_disc[$key]);
                 $total_tax += numberClean($ptotal_tax[$key]);
@@ -194,7 +198,8 @@ class Invoices extends CI_Controller
                     'totaltax' => rev_amountExchange_s($ptotal_tax[$key], $currency, $this->aauth->get_user()->loc),
                     'totaldiscount' => rev_amountExchange_s($ptotal_disc[$key], $currency, $this->aauth->get_user()->loc),
                     'product_des' => $product_des[$key],
-                    'unit' => $product_unit[$key]
+                    'unit' => $product_unit[$key],
+                    'is_bonus' => $ibonus[$key]
                 );
 
                 $productlist[$prodindex] = $data;
@@ -356,7 +361,8 @@ class Invoices extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = "Invoice " . $data['invoice']['tid'];
         $this->load->view('fixed/header', $head);
-        $data['products'] = $this->invocies->invoice_products($tid);
+        $data['products'] = $this->invocies->invoice_products($tid,0);
+        $data['products_bonus'] = $this->invocies->invoice_products($tid,1);
         if ($data['invoice']['id']) $data['activity'] = $this->invocies->invoice_transactions($tid);
         $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
         if ($data['invoice']['id']) {
@@ -372,7 +378,8 @@ class Invoices extends CI_Controller
         $tid = $this->input->get('id');
         $data['id'] = $tid;
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']['id']) $data['products'] = $this->invocies->invoice_products($tid);
+        if ($data['invoice']['id']) $data['products'] = $this->invocies->invoice_products($tid,0);
+        if ($data['invoice']['id']) $data['products_bonus'] = $this->invocies->invoice_products($tid,1);
         if ($data['invoice']['id']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
         if ($data['invoice']['i_class'] == 1) {
             $pref = prefix(7);
@@ -494,6 +501,7 @@ class Invoices extends CI_Controller
             $product_des = $this->input->post('product_description', true);
             $product_unit = $this->input->post('unit');
             $product_hsn = $this->input->post('hsn');
+            $ibonus = $this->input->post('ibonus');
 
             foreach ($pid as $key => $value) {
 
@@ -513,7 +521,8 @@ class Invoices extends CI_Controller
                     'totaltax' => rev_amountExchange_s($ptotal_tax[$key], $currency, $this->aauth->get_user()->loc),
                     'totaldiscount' => rev_amountExchange_s($ptotal_disc[$key], $currency, $this->aauth->get_user()->loc),
                     'product_des' => $product_des[$key],
-                    'unit' => $product_unit[$key]
+                    'unit' => $product_unit[$key],
+                    'is_bonus' => $ibonus[$key]
                 );
                 $productlist[$prodindex] = $data;
                 $i++;

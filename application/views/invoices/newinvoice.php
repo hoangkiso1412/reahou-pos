@@ -244,8 +244,15 @@ $e_id = $this->aauth->get_user()->id;
                             <tr>
                                 <td colspan="8"><textarea id="dpid-0" class="form-control" name="product_description[]"
                                                           placeholder="<?php echo $this->lang->line('Enter Product description'); ?> (Optional)"
-                                                          autocomplete="off"></textarea><br></td>
+                                                          autocomplete="off"></textarea><br>
+                                <input type="hidden" name="ibonus[]" id="ibonus-0" value="0">
+                                </td>
                             </tr>
+                            
+                            <tr class="hidden" role="item-separate"><td colspan="8"></td></tr>
+                            <tr class="hidden"><td colspan="8"></td></tr>
+                            <tr class="hidden"><td colspan="8"></td></tr>
+                            <tr class="hidden"><td colspan="8"></td></tr>
 
                             <tr class="last-item-row sub_c">
                                 <td class="add-row">
@@ -254,7 +261,14 @@ $e_id = $this->aauth->get_user()->id;
                                             discount-rate='<?php echo trim($discount_input) ?>' 
                                             id="addproduct" product-rate='<?php echo trim($rate_input) ?>'>
                                         <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
+                                    </button> 
+                                    <button type="button" class="btn btn-warning" aria-label="Left Align" 
+                                            tax-rate='<?php echo trim($tax_input) ?>' 
+                                            discount-rate='<?php echo trim($discount_input) ?>' 
+                                            id="addproduct_bonus" product-rate='<?php echo trim($rate_input) ?>'>
+                                        <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Bonus Row') ?>
                                     </button>
+                                    <input class="hidden" id="chk_bonus" type="checkbox">
                                 </td>
                                 <td colspan="7"></td>
                             </tr>

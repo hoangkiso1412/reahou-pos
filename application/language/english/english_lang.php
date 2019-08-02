@@ -133,6 +133,7 @@ $lang['Tax(%)'] = " Tax(%)";
 $lang['Discount'] = " Discount";
 $lang['Action'] = " Action";
 $lang['Add Row'] = "  Add Row";
+$lang['Add Bonus Row'] = "  Add Bonus Row";
 $lang['Total Tax'] = " Total Tax";
 $lang['Total Discount'] = " Total Discount";
 $lang['Shipping'] = " Shipping";
