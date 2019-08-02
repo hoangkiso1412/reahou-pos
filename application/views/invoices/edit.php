@@ -276,7 +276,45 @@ $e_id = $invoice['eid'];
                         <input type="hidden" class="pdIn" name="pid[]" id="pid-' . $i . '" value="' . $row['pid'] . '">
                              <input type="hidden" name="unit[]" id="unit-' . $i . '" value="' . $row['unit'] . '">
                                    <input type="hidden" name="hsn[]" id="unit-' . $i . '" value="' . $row['code'] . '">
-                    </tr> <tr class="desc_p"><td colspan="8"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="' . $this->lang->line('Enter Product description') . '" autocomplete="off">' . $row['product_des'] . '</textarea><br></td></tr>';
+                    </tr> <tr class="desc_p"><td colspan="8"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="' . $this->lang->line('Enter Product description') . '" autocomplete="off">' . $row['product_des'] . '</textarea><br>'
+                                            . '<input type="hidden" name="ibonus[]" id="ibonus-' . $i . '" value="0"></td></tr>';
+                                    $i++;
+                                } ?>
+                                    <tr class="hidden" role="item-separate"><td colspan="8"></td></tr>
+                                    <tr class="hidden"><td colspan="8"></td></tr>
+                                    <tr class="hidden"><td colspan="8"></td></tr>
+                                    <tr class="hidden"><td colspan="8"></td></tr>
+                                    <?php 
+                                foreach ($products_bonus as $row) {
+                                    echo '<tr >
+                        <td><input type="text" class="form-control text-center" name="product_name[]"  value="' . $row['product'] . '">
+                        </td>
+                        <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-' . $i . '"
+                                   onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
+                                   autocomplete="off" value="' . amountFormat_general($row['qty']) . '" ><input type="hidden" name="old_product_qty[]" value="' . amountFormat_general($row['qty']) . '" ></td>
+                        <td><input '.$rate_input.' type="text" class="hidden form-control req prc" name="product_price[]" id="price-' . $i . '"
+                                   onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
+                                   autocomplete="off" value="' . edit_amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '"></td>
+                        <td> <input '.$tax_input.' type="text" class="hidden form-control vat" name="product_tax[]" id="vat-' . $i . '"
+                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
+                                    autocomplete="off"  value="' . amountFormat_general($row['tax']) . '"></td>
+                        <td class="text-center text-inherit" id="texttaxa-' . $i . '">' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '</td>
+                        <td><input '.$discount_input.' type="text" class="hidden form-control discount" name="product_discount[]"
+                                   onkeypress="return isNumber(event)" id="discount-' . $i . '"
+                                   onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off"  value="' . amountFormat_general($row['discount']) . '"></td>
+                        <td><span class="hidden currenty">' . $this->config->item('currency') . '</span>
+                            <strong class="hidden "><span class="ttlText" id="result-' . $i . '">' . edit_amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '</span></strong></td>
+                        <td class="text-center">'.
+($cancel_enable==1?'<button type="button" data-rowid="' . $i . '" class="btn-sm btn-danger removeProd" title="Remove"> <i class="fa fa-minus-square"></i> </button>':'')
+                        .'</td>
+                        <input type="hidden" name="taxa[]" id="taxa-' . $i . '" value="' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
+                        <input type="hidden" name="disca[]" id="disca-' . $i . '" value="' . edit_amountExchange_s($row['totaldiscount'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
+                        <input type="hidden" class="ttInput" name="product_subtotal[]" id="total-' . $i . '" value="' . edit_amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
+                        <input type="hidden" class="pdIn" name="pid[]" id="pid-' . $i . '" value="' . $row['pid'] . '">
+                             <input type="hidden" name="unit[]" id="unit-' . $i . '" value="' . $row['unit'] . '">
+                                   <input type="hidden" name="hsn[]" id="unit-' . $i . '" value="' . $row['code'] . '">
+                    </tr> <tr class="desc_p"><td colspan="8"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="' . $this->lang->line('Enter Product description') . '" autocomplete="off">' . $row['product_des'] . '</textarea><br>'
+                                            . '<input type="hidden" name="ibonus[]" id="ibonus-' . $i . '" value="1"></td></tr>';
                                     $i++;
                                 } ?>
                                     <tr class="last-item-row sub_c">
@@ -288,6 +326,13 @@ $e_id = $invoice['eid'];
                                                     id="addproduct">
                                                 <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
                                             </button>
+                                            <button type="button" class="btn btn-warning" aria-label="Left Align" 
+                                                    tax-rate='<?php echo trim($tax_input) ?>' 
+                                                    discount-rate='<?php echo trim($discount_input) ?>' 
+                                                    id="addproduct_bonus" product-rate='<?php echo trim($rate_input) ?>'>
+                                                <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Bonus Row') ?>
+                                            </button>
+                                            <input class="hidden" id="chk_bonus" type="checkbox">
                                         </td>
                                         <td colspan="7"></td>
                                     </tr>

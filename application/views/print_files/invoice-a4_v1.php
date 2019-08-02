@@ -193,6 +193,11 @@
                 /*background-color: #eee;*/
             }
             
+            .item-bonus, .item-bonus td {
+                background: #ddd !important;
+            }
+            
+            
             .descr {
                 font-size: 10pt;
                 color: #515151;
@@ -235,6 +240,9 @@
             
             .def-font{
                 font-size:9pt;
+            }
+            .text-inherit{
+                opacity:0 !important;
             }
         </style>
     </head>
@@ -383,6 +391,56 @@
                     }
                         
                     echo '<tr class="item' . $flag . ' descr">  <td> </td>
+                            <td colspan="' . $cc . '">' . $z_custom_fields . '&nbsp;</td>
+                                
+                        </tr>';
+                }
+            }
+            $fill = !$fill;
+            $n++;
+        }
+        foreach ($products_bonus as $row) {
+            if ($fill == true) {
+                $flag = ' mfill';
+            } else {
+                $flag = '';
+            }
+            $sub_t += $row['price'] * $row['qty'];
+                
+                
+            echo '<tr style="background-color: #000" class="item-bonus item' . $flag . '">  <td>' . $n . '</td>
+                <td style="width:14%;">'.$row['barcode'].'</td><td style="width:8%;">'.$row['product_code'].'</td>
+                <td>' . $row['product'] . '</td>
+                <td style="width:12%;">'.$row['unit'].'</td>
+                <td style="width:4%;" class="col-right">' . +amountFormat_general($row['qty'],true) . '</td>
+		<td class="col-right"></td>';
+            if ($invoice['tax'] > 0) {
+                echo '<td style="width:10%;" class="col-right text-inherit"></td>';
+            }
+                
+            echo ' <td style="width:9%;" class="col-right text-inherit"></td>';
+                
+            echo '<td style="width:10%;" class="t_center text-inherit"></td></tr>';
+                
+            if ($row['product_des']) {
+                //$cc = $cols++;
+                    
+                echo '<tr class="item-bonus item' . $flag . ' descr">  <td> </td>
+                            <td colspan="' . $cc . '">' . nl2br($row['product_des']) . '&nbsp;</td>
+                                
+                        </tr>';
+            }
+            if (CUSTOM) {
+                $p_custom_fields = $this->custom->view_fields_data($row['pid'], 4, 1);
+                    
+                if (is_array($p_custom_fields[0])) {
+                    $z_custom_fields = '';
+                        
+                    foreach ($p_custom_fields as $row) {
+                        $z_custom_fields .= $row['name'] . ': ' . $row['data'] . '<br>';
+                    }
+                        
+                    echo '<tr class="item-bonus item' . $flag . ' descr">  <td> </td>
                             <td colspan="' . $cc . '">' . $z_custom_fields . '&nbsp;</td>
                                 
                         </tr>';

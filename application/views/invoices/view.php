@@ -239,8 +239,8 @@ if (!$this->aauth->premission(19)) {
                                                                 <th>#</th>
                                                                 <th><?php echo $this->lang->line('Description') ?></th>
                                                                 <th class="text-xs-left"><?php echo $this->lang->line('HSN') ?></th>
-                                                                <th class="text-xs-left"><?php echo $this->lang->line('Rate') ?></th>
                                                                 <th class="text-xs-left"><?php echo $this->lang->line('Qty') ?></th>
+                                                                <th class="text-xs-left"><?php echo $this->lang->line('Rate') ?></th>
                                                                 <th class="text-xs-left"><?php echo $this->lang->line('Discount') ?></th>
                                                                 <th class="text-xs-left"><?php echo $this->lang->line('CGST') ?></th>
                                                                 <th class="text-xs-left"><?php echo $this->lang->line('SGST') ?></th>
@@ -258,9 +258,9 @@ if (!$this->aauth->premission(19)) {
                                     echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td> 
-                            <td>' . $row['code'] . '</td>                          
-                            <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
+                            <td>' . $row['code'] . '</td>
                              <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
+                            <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
                               <td>' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
                             <td>' . amountExchange($gst, 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($rate) . '%)</td>
                              <td>' . amountExchange($gst, 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($rate) . '%)</td>                           
@@ -269,7 +269,27 @@ if (!$this->aauth->premission(19)) {
 
                                     echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
                                     $c++;
-                                } ?>
+                                }
+                                foreach ($products_bonus as $row) {
+                                    $sub_t += $row['price'] * $row['qty'];
+                                    $gst = $row['totaltax'] / 2;
+                                    $rate = $row['tax'] / 2;
+                                    echo '<tr class="bonus-item">
+<th scope="row">' . $c . '</th>
+                            <td>' . $row['product'] . '</td> 
+                            <td>' . $row['code'] . '</td>
+                             <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
+                            <td class="text-inherit">' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
+                              <td class="text-inherit">' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
+                            <td class="text-inherit">' . amountExchange($gst, 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($rate) . '%)</td>
+                             <td class="text-inherit">' . amountExchange($gst, 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($rate) . '%)</td>                           
+                            <td class="text-inherit">' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td>
+                        </tr>';
+
+                                    echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
+                                    $c++;
+                                }
+                                ?>
                                                             
                                                         </tbody>
                                 <?php
@@ -280,8 +300,8 @@ if (!$this->aauth->premission(19)) {
                                                             <th>#</th>
                                                             <th><?php echo $this->lang->line('Description') ?></th>
                                                             <th class="text-xs-left"><?php echo $this->lang->line('HSN') ?></th>
-                                                            <th class="text-xs-left"><?php echo $this->lang->line('Rate') ?></th>
                                                             <th class="text-xs-left"><?php echo $this->lang->line('Qty') ?></th>
+                                                            <th class="text-xs-left"><?php echo $this->lang->line('Rate') ?></th>
                                                             <th class="text-xs-left"><?php echo $this->lang->line('Discount') ?></th>
                                                             <th class="text-xs-left"><?php echo $this->lang->line('IGST') ?></th>
                                                             
@@ -299,17 +319,34 @@ if (!$this->aauth->premission(19)) {
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td> 
                             <td>' . $row['code'] . '</td>                          
-                            <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
                              <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
+                            <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
                               <td>' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
                             <td>' . amountExchange($row['totaltax'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['tax']) . '%)</td>
-                                            
                             <td>' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td>
                         </tr>';
 
                                         echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
                                         $c++;
-                                    } ?>
+                                    }
+                                    foreach ($products_bonus as $row) {
+                                        $sub_t += $row['price'] * $row['qty'];
+
+                                        echo '<tr class="bonus-item">
+<th scope="row">' . $c . '</th>
+                            <td>' . $row['product'] . '</td> 
+                            <td>' . $row['code'] . '</td>                          
+                             <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
+                            <td class="text-inherit">' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
+                              <td class="text-inherit">' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
+                            <td class="text-inherit">' . amountExchange($row['totaltax'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['tax']) . '%)</td>      
+                            <td class="text-inherit">' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td>
+                        </tr>';
+
+                                        echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
+                                        $c++;
+                                    }
+                                    ?>
                                                             
                                                         </tbody>
                                     <?php
@@ -318,8 +355,8 @@ if (!$this->aauth->premission(19)) {
                                                         <tr>
                                                             <th>#</th>
                                                             <th><?php echo $this->lang->line('Description') ?></th>
-                                                            <th class="text-xs-left"><?php echo $this->lang->line('Rate') ?></th>
                                                             <th class="text-xs-left"><?php echo $this->lang->line('Qty') ?></th>
+                                                            <th class="text-xs-left"><?php echo $this->lang->line('Rate') ?></th>
                                                             <th class="text-xs-left"><?php echo $this->lang->line('Tax') ?></th>
                                                             <th class="text-xs-left"><?php echo $this->lang->line('Discount') ?></th>
                                                             <th class="text-xs-left"><?php echo $this->lang->line('Amount') ?></th>
@@ -334,8 +371,8 @@ if (!$this->aauth->premission(19)) {
                                         echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td>                           
-                            <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
                              <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
+                            <td>' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
                             <td>' . amountExchange($row['totaltax'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['tax']) . '%)</td>
                             <td>' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
                             <td>' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td>
@@ -343,7 +380,25 @@ if (!$this->aauth->premission(19)) {
 
                                         echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
                                         $c++;
-                                    } ?>
+                                    }
+                                    
+                                    foreach ($products_bonus as $row) {
+                                        $sub_t += $row['price'] * $row['qty'];
+                                        echo '<tr class="bonus-item">
+<th scope="row">' . $c . '</th>
+                            <td>' . $row['product'] . '</td>                           
+                             <td>' . amountFormat_general($row['qty'],true) . $row['unit'] . '</td>
+                            <td class="text-inherit">' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
+                            <td class="text-inherit">' . amountExchange($row['totaltax'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['tax']) . '%)</td>
+                            <td class="text-inherit">' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . ' (' . amountFormat_s($row['discount']) . $this->lang->line($invoice['format_discount']) . ')</td>
+                            <td class="text-inherit">' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td>
+                        </tr>';
+
+                                        echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
+                                        $c++;
+                                    }
+                                    
+                                    ?>
                                                             
                                                         </tbody>
                                 <?php } ?>

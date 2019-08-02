@@ -615,3 +615,9 @@ text-transform: capitalize;
   font-family: 'KhMoul';
   src: url(LimonR1Unicode.ttf);
 }
+.text-inherit{
+    opacity: 0 !important;
+}
+.bonus-item{
+    color: darkred;
+}

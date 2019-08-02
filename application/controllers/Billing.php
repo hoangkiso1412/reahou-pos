@@ -200,7 +200,8 @@ class Billing extends CI_Controller
             $data['id'] = $tid;
             $data['invoice'] = $this->invocies->invoice_details($tid);
             $data['title'] = "Invoice " . $data['invoice']['tid'];
-            $data['products'] = $this->invocies->invoice_products($tid);
+            $data['products'] = $this->invocies->invoice_products($tid,0);
+            $data['products_bonus'] = $this->invocies->invoice_products($tid,1);
             $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
             if (CUSTOM) $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1, 1);
 
