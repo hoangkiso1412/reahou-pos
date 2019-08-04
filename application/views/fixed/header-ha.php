@@ -847,7 +847,7 @@
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="icon-book-open"></i><?php echo $this->lang->line('Accounts') ?></a>
                             <ul class="dropdown-menu">
-                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>accounts"
+                                <li data-menu="" class="hidden"><a class="dropdown-item" href="<?php echo base_url(); ?>accounts"
                                                     data-toggle="dropdown"><?php echo $this->lang->line('Manage Accounts') ?></a>
                                 </li>
                                 <li data-menu=""><a class="dropdown-item"

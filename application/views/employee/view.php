@@ -115,8 +115,6 @@
                                                 <i class="icon-book"></i>
                                             </div>
                                             <div class="text">
-
-
                                             </div>
                                             <div class="options">
                                                 <a href="<?php echo base_url('employee/transactions?id=' . $eid) ?>"
@@ -233,9 +231,20 @@
                                     </div>
 
                                 </div>
+                                <div class="row mb-2">
+                                    <div class="col-sm-6">
+                                        <div class="hero-widget well well-sm">
+                                            <div class="options">
+                                                <a href="<?php echo base_url('employee/target?id=' . $eid) ?>"
+                                                   class="btn btn-purple btn-block"><i
+                                                            class="fa fa-money"></i> <?php echo "Target" //echo $this->lang->line('Account')  ?> <?php echo "Amount" //$this->lang->line('Account') ?>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

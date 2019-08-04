@@ -71,6 +71,16 @@ class Employee extends CI_Controller
 
     }
 
+    public function target() {
+      $id = $this->input->get('id');
+      $head['usernm'] = $this->aauth->get_user()->username;
+      $head['title'] = 'Employees List';
+      $data['employee'] = $this->employee->employee_details($id);
+      $this->load->view('fixed/header', $head);
+      $this->load->view('employee/target', $data);
+      $this->load->view('fixed/footer');
+    }
+
     public function history()
     {
         $id = $this->input->get('id');
@@ -133,6 +143,7 @@ class Employee extends CI_Controller
         $salary = numberClean($this->input->post('salary', true));
         $commission = $this->input->post('commission', true);
         $department = $this->input->post('department', true);
+        $target = numberClean($this->input->post('target', true));
 
 
         $a = $this->aauth->create_user($email, $password, $username);
@@ -143,7 +154,7 @@ class Employee extends CI_Controller
             if ($nuid > 0) {
 
 
-                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department);
+                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department,$target);
 
             }
 
@@ -210,6 +221,37 @@ class Employee extends CI_Controller
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->employee->invoicecount_all($eid),
             "recordsFiltered" => $this->employee->invoicecount_filtered($eid),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+
+    }
+
+    public function target_list()
+    {
+        $eid  = $this->input->post('eid');
+        $list = $this->employee->target_datatables($eid);
+        $data = array();
+
+        $no = $this->input->post('start');
+
+        foreach ($list as $target) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $target->target_date;
+            $row[] = $target->target;
+            $row[] = $target->c_rate;
+            $row[] = $target->total_sale_amount;
+            $row[] = $target->commission;
+            $data[] = $row;
+        }
+        
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal"    => $this->employee->targetcount_all($eid),
+            "recordsFiltered" => $this->employee->targetcount_filtered($eid),
             "data" => $data,
         );
         //output to json format
@@ -397,7 +439,8 @@ class Employee extends CI_Controller
             $department = $this->input->post('department', true);
             $commission = $this->input->post('commission', true);
             $roleid = $this->input->post('roleid', true);
-            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary, $department, $commission, $roleid);
+            $target = numberClean($this->input->post('target', true));
+            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary, $department, $commission, $roleid, $target);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;

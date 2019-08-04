@@ -232,12 +232,8 @@ class YearToDate_model extends CI_Model
         $this->db->where('geopos_invoices.i_class', 0);
         $this->db->where("date_format(geopos_invoices.invoicedate,'%Y')", date('Y'));
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
-<<<<<<< HEAD
-        //$this->db->group_by('geopos_invoices.csd');
-=======
         $this->db->group_by('geopos_invoices.csd');
         $this->db->order_by('geopos_customers.name','asc');
->>>>>>> a45120e370b921f5b68a3b648f6c4c6ae6bafacd
 
         if ($opt) {
             $this->db->where('geopos_invoices.eid', $opt);
