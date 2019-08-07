@@ -6,3 +6,4 @@ nbproject/project.properties
 nbproject/project.xml
 application/config/config.php
 application/config/database.php
+application/cache/cache_validation
