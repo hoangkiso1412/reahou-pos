@@ -408,7 +408,7 @@
             $sub_t += $row['price'] * $row['qty'];
                 
                 
-            echo '<tr style="background-color: #000" class="item-bonus item' . $flag . '">  <td>' . $m . '</td>
+            echo '<tr style="background-color: #000" class="item-bonus item' . $flag . '">  <td>' . $n . '</td>
                 <td style="width:14%;">'.$row['barcode'].'</td><td style="width:8%;">'.$row['product_code'].'</td>
                 <td>' . $row['product'] . ' - Bonus</td>
                 <td style="width:12%;">'.$row['unit'].'</td>
