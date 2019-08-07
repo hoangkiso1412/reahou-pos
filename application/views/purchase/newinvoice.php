@@ -1,3 +1,22 @@
+<?php
+$rate_input = '';
+if (!$this->aauth->premission(20)) {
+    $rate_input = ' readonly ';
+}
+$tax_input = '';
+if (!$this->aauth->premission(21)) {
+    $tax_input = ' readonly ';
+}
+$discount_input = '';
+if (!$this->aauth->premission(22)) {
+    $discount_input = ' readonly ';
+}
+$shipping_input = '';
+if (!$this->aauth->premission(23)) {
+    $shipping_input = ' readonly ';
+}
+$e_id = $this->aauth->get_user()->id;
+?>
 <div class="content-body">
     <div class="card">
         <div class="card-content">
@@ -147,7 +166,7 @@
                                     <div class="col-sm-6">
                                         <label for="taxformat"
                                                class="caption"><?php echo $this->lang->line('Tax') ?> </label>
-                                        <select class="form-control round"
+                                        <select combo-enable='<?php echo trim($tax_input) ?>' class="form-control round"
                                                 onchange="changeTaxFormat(this.value)"
                                                 id="taxformat">
                                             <?php echo $taxlist; ?>
@@ -158,7 +177,7 @@
                                         <div class="form-group">
                                             <label for="discountFormat"
                                                    class="caption"><?php echo $this->lang->line('Discount') ?></label>
-                                            <select class="form-control" onchange="changeDiscountFormat(this.value)"
+                                            <select combo-enable='<?php echo trim($discount_input) ?>' class="form-control" onchange="changeDiscountFormat(this.value)"
                                                     id="discountFormat">
                                                 <?php echo $this->common->disclist() ?>
                                             </select>
@@ -205,16 +224,22 @@
                                 <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
                                            autocomplete="off" value="1"></td>
-                                <td><input type="text" class="form-control req prc" name="product_price[]" id="price-0"
+                                <td>
+                                <input type="text" <?php echo $rate_input ?> class="form-control req prc" name="product_price[]" id="price-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
-                                           autocomplete="off"></td>
-                                <td><input type="text" class="form-control vat " name="product_tax[]" id="vat-0"
+                                           autocomplete="off">
+                                </td>
+                                <td>
+                                <input type="text" <?php echo $tax_input ?>  class="form-control vat " name="product_tax[]" id="vat-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
-                                           autocomplete="off"></td>
+                                           autocomplete="off">
+                                </td>
                                 <td class="text-center" id="texttaxa-0">0</td>
-                                <td><input type="text" class="form-control discount" name="product_discount[]"
+                                <td>
+                                <input <?php echo $discount_input ?> type="text" class="form-control discount" name="product_discount[]"
                                            onkeypress="return isNumber(event)" id="discount-0"
-                                           onkeyup="rowTotal('0'), billUpyog()" autocomplete="off"></td>
+                                           onkeyup="rowTotal('0'), billUpyog()" autocomplete="off">
+                                </td>
                                 <td><span class="currenty"><?php echo $this->config->item('currency'); ?></span>
                                     <strong><span class='ttlText' id="result-0">0</span></strong></td>
                                 <td class="text-center">
@@ -263,7 +288,8 @@
                             <tr class="sub_c" style="display: table-row;">
                                 <td colspan="6" align="right">
                                     <strong><?php echo $this->lang->line('Shipping') ?></strong></td>
-                                <td align="left" colspan="2"><input type="text" class="form-control shipVal"
+                                <td align="left" colspan="2">
+                                <input type="text" <?php echo $shipping_input ?> class="form-control shipVal"
                                                                     onkeypress="return isNumber(event)"
                                                                     placeholder="Value"
                                                                     name="shipping" autocomplete="off"

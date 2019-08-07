@@ -229,9 +229,15 @@ class Purchase extends CI_Controller
 
     public function ajax_list()
     {
-
         $list = $this->purchase->get_datatables();
         $data = array();
+
+        $cancel_enable_pre = '&nbsp;&nbsp;<a href="#" data-object-id="';
+        $cancel_enable_suf = '" class="btn btn-danger btn-xs delete-object"><span class="fa fa-trash"></span></a>';
+        if (!$this->aauth->premission(24)) {
+            $cancel_enable_pre = '<a href="#" suf-id="';
+            $cancel_enable_suf = '" class="hidden"></a>';
+        }
 
         $no = $this->input->post('start');
 
@@ -244,7 +250,7 @@ class Purchase extends CI_Controller
             $row[] = dateformat($invoices->invoicedate);
             $row[] = amountExchange($invoices->total, 0, $this->aauth->get_user()->loc);
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
-            $row[] = '<a href="' . base_url("purchase/view?id=$invoices->id") . '" class="btn btn-success btn-xs"><i class="fa fa-eye"></i> ' . $this->lang->line('View') . '</a> &nbsp; <a href="' . base_url("purchase/printinvoice?id=$invoices->id") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="fa fa-download"></span></a>&nbsp; &nbsp;<a href="#" data-object-id="' . $invoices->id . '" class="btn btn-danger btn-xs delete-object"><span class="fa fa-trash"></span></a>';
+            $row[] = '<a href="' . base_url("purchase/view?id=$invoices->id") . '" class="btn btn-success btn-xs"><i class="fa fa-eye"></i> ' . $this->lang->line('View') . '</a> &nbsp; <a href="' . base_url("purchase/printinvoice?id=$invoices->id") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="fa fa-download"></span></a>'.$cancel_enable_pre.$invoices->id.$cancel_enable_suf;
 
             $data[] = $row;
         }

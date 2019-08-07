@@ -1,3 +1,22 @@
+<?php
+$rate_input = '';
+if (!$this->aauth->premission(12)) {
+    $rate_input = ' readonly ';
+}
+$tax_input = '';
+if (!$this->aauth->premission(13)) {
+    $tax_input = ' readonly ';
+}
+$discount_input = '';
+if (!$this->aauth->premission(14)) {
+    $discount_input = ' readonly ';
+}
+$shipping_input = '';
+if (!$this->aauth->premission(15)) {
+    $shipping_input = ' readonly ';
+}
+$e_id = $this->aauth->get_user()->id;
+?>
 <div class="content-body">
     <div class="card">
         <div class="card-content">
@@ -138,7 +157,7 @@
                                         <div class="col-sm-6">
                                             <label for="taxformat"
                                                    class="caption"><?php echo $this->lang->line('Tax') ?></label>
-                                            <select class="form-control round" onchange="changeTaxFormat(this.value)"
+                                            <select class="form-control round" combo-enable='<?php echo trim($discount_input) ?>'  onchange="changeTaxFormat(this.value)"
                                                     id="taxformat">
 
                                                 <?php echo $taxlist; ?>
@@ -149,7 +168,7 @@
                                             <div class="form-group">
                                                 <label for="discountFormat"
                                                        class="caption"><?php echo $this->lang->line('Discount') ?></label>
-                                                <select class="form-control" onchange="changeDiscountFormat(this.value)"
+                                                <select class="form-control" combo-enable='<?php echo trim($discount_input) ?>'  onchange="changeDiscountFormat(this.value)"
                                                         id="discountFormat">
                                                     <?php echo '<option value="' . $invoice['format_discount'] . '">' . $this->lang->line('Do not change') . '</option>'; ?>
                                                     <?php echo $this->common->disclist() ?>
@@ -192,20 +211,22 @@
                                 <tbody>
                                 <?php $i = 0;
                                 foreach ($products as $row) {
-                                    echo '<tr >
+                                    echo '<tr>
                         <td><input type="text" class="form-control" name="product_name[]" placeholder="Enter Product name or Code"  value="' . $row['product'] . '">
                         </td>
                         <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-' . $i . '"
                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
                                    autocomplete="off" value="' . amountFormat_general($row['qty']) . '" ><input type="hidden" name="old_product_qty[]" value="' . amountFormat_general($row['qty']) . '" ></td>
-                        <td><input type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '"
+                        <td>
+                        <input type="text" '.$rate_input.' class="form-control req prc" name="product_price[]" id="price-' . $i . '"
                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
-                                   autocomplete="off" value="' . edit_amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '"></td>
-                        <td> <input type="text" class="form-control vat" name="product_tax[]" id="vat-' . $i . '"
+                                   autocomplete="off" value="' . edit_amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
+                        </td>
+                        <td> <input type="text" '.$tax_input.' class="form-control vat" name="product_tax[]" id="vat-' . $i . '"
                                     onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
                                     autocomplete="off"  value="' . amountFormat_general($row['tax']) . '"></td>
                         <td class="text-center" id="texttaxa-' . $i . '">' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '</td>
-                        <td><input type="text" class="form-control discount" name="product_discount[]"
+                        <td><input type="text" '.$discount_input.' class="form-control discount" name="product_discount[]"
                                    onkeypress="return isNumber(event)" id="discount-' . $i . '"
                                    onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off"  value="' . amountFormat_general($row['discount']) . '"></td>
                         <td><span class="currenty">' . $this->config->item('currency') . '</span>
@@ -258,6 +279,7 @@
                                     </td>
                                     <td align="left" colspan="2"><input type="text" class="form-control shipVal"
                                                                         onkeypress="return isNumber(event)"
+                                                                        <?php echo $shipping_input ?>
                                                                         placeholder="Value"
                                                                         name="shipping" autocomplete="off"
                                                                         onkeyup="billUpyog()"

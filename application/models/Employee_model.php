@@ -46,7 +46,7 @@ class Employee_model extends CI_Model
 
     public function employee_details($id)
     {
-        $this->db->select('geopos_employees.*,geopos_users.email,geopos_users.loc,geopos_users.roleid,');
+        $this->db->select('geopos_employees.*,geopos_users.email,geopos_users.loc,geopos_users.roleid');
         $this->db->from('geopos_employees');
         $this->db->where('geopos_employees.id', $id);
         $this->db->join('geopos_users', 'geopos_employees.id = geopos_users.id', 'left');
@@ -64,7 +64,7 @@ class Employee_model extends CI_Model
         return $query->result_array();
     }
 
-    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1,$commission=0,$roleid=false)
+    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1,$commission=0,$roleid=false,$target=0)
     {
         $this->db->select('salary');
         $this->db->from('geopos_employees');
@@ -88,7 +88,8 @@ class Employee_model extends CI_Model
             'country' => $country,
             'postbox' => $postbox,
             'salary' => $salary,
-             'c_rate' => $commission
+            'c_rate' => $commission,
+            'target_amount' => $target
         );
         if ($department > -1) {
             $data = array(
@@ -102,7 +103,8 @@ class Employee_model extends CI_Model
                 'postbox' => $postbox,
                 'salary' => $salary,
                 'dept' => $department,
-                 'c_rate' => $commission
+                'c_rate' => $commission,
+                'target_amount' => $target
             );
         }
 
@@ -247,9 +249,84 @@ class Employee_model extends CI_Model
         }
     }
 
+    private function _target_datatables_query($id)
+    {
+        // $this->db->select('geopos_employees.id,
+        //                   geopos_employees.name,
+        //                   date_format(gi.invoicedate,"%Y-%m") as target_date,
+        //                   ifnull(geopos_employees.target_amount,0) as target,
+        //                   geopos_employees.c_rate,
+        //                   (select sum(giv.total) from geopos_invoices giv where giv.eid=geopos_employees.id and date_format(giv.invoicedate,"%Y-%m")=date_format(invoicedate,"%Y-%m")) as total_sale_amount,
+        //                   if((select sum(geopos_invoices.total) from geopos_invoices where geopos_invoices.eid=geopos_employees.id)>ifnull(geopos_employees.target_amount,0),"targeted","is_not_targeted") as target_status,
+        //                   if((select sum(geopos_invoices.total) from geopos_invoices where geopos_invoices.eid=geopos_employees.id)>ifnull(geopos_employees.target_amount,0),((select sum(geopos_invoices.total) from geopos_invoices where geopos_invoices.eid=geopos_employees.id)-(ifnull(geopos_employees.target_amount,0)))*(geopos_employees.c_rate)/100,0) as commission');
+        // $this->db->from('geopos_employees');
+        // $this->db->where('geopos_employees.id', $id);
+        // $this->db->join('geopos_invoices', 'geopos_invoices.eid=geopos_employees.id', 'inner');
+        $this->db->select('geopos_employees.c_rate,
+                          date_format(geopos_invoices.invoicedate,"%Y-%m") as target_date,
+                          ifnull(geopos_employees.target_amount,0) as target,
+                          sum(geopos_invoices.total) as total_sale_amount,
+                          geopos_employees.target_amount as target,
+                          if(sum(geopos_invoices.total)>ifnull(geopos_employees.target_amount,0),"targeted","is_not_target") as target_status,
+                          if(sum(geopos_invoices.total)>ifnull(geopos_employees.target_amount,0),(sum(geopos_invoices.total)-ifnull(geopos_employees.target_amount,0))*(geopos_employees.c_rate)/100,0) as commission');
+
+        // $this->db->select('
+        //                   geopos_employees.c_rate,
+        //                   date_format(geopos_invoices.invoicedate,"%Y-%m") as target_date,
+        //                   ifnull(geopos_employees.target_amount,0) as target,
+        //                   100 as total_sale_amount,
+        //                   200 as target,
+        //                   "paid" as target_status,
+        //                   2 as commission');
+        $this->db->from('geopos_invoices');
+        $this->db->where('geopos_invoices.eid', $id);
+        $this->db->join('geopos_employees', 'geopos_invoices.eid=geopos_employees.id', 'inner');
+        $this->db->group_by('date_format(geopos_invoices.invoicedate,"%Y-%m")');
+        
+        $i = 0;
+
+        foreach ($this->column_search as $item) // loop column
+        {
+            $search = $this->input->post('search');
+            $value = $search['value'];
+            if ($value) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $value);
+                } else {
+                    $this->db->or_like($item, $value);
+                }
+
+                if (count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+        $search = $this->input->post('order');
+        if ($search) // here order processing
+        {
+            $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
+        } else if (isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
     function invoice_datatables($id)
     {
         $this->_invoice_datatables_query($id);
+        if ($this->input->post('length') != -1)
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function target_datatables($id)
+    {
+        $this->_target_datatables_query($id);
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
@@ -275,6 +352,28 @@ class Employee_model extends CI_Model
         }
         return $query->num_rows($id = '');
     }
+
+    function targetcount_filtered($id)
+    {
+        $this->_target_datatables_query($id);
+        $query = $this->db->get();
+        if ($id != '') {
+            $this->db->where('geopos_invoices.eid', $id);
+        }
+        return $query->num_rows($id);
+    }
+
+    public function targetcount_all($id)
+    {
+        $this->_target_datatables_query($id);
+        $query = $this->db->get();
+        if ($id != '') {
+            $this->db->where('geopos_invoices.eid', $id);
+        }
+        return $query->num_rows($id = '');
+    }
+
+    
 
     //transaction
 
@@ -347,7 +446,7 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location,$salary = 0,$commission = 0,$department=0)
+    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location,$salary = 0,$commission = 0,$department=0,$target=0)
     {
         $data = array(
             'id' => $id,
@@ -359,9 +458,10 @@ class Employee_model extends CI_Model
             'country' => $country,
             'postbox' => $postbox,
             'phone' => $phone,
-              'dept' => $department,
-              'salary' => $salary,
-            'c_rate' => $commission
+            'dept' => $department,
+            'salary' => $salary,
+            'c_rate' => $commission,
+            'target_amount' =>$target
         );
 
 
