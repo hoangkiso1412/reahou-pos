@@ -23,7 +23,7 @@ class YearToDate_model extends CI_Model
     var $table = 'geopos_invoices';
     var $year = 'Year(invoicedate)';
     var $column_order = array(null, 'geopos_invoices.id','geopos_invoices.tid','geopos_invoices.invoicedate','geopos_invoices.invoiceduedate','geopos_invoices.total','geopos_invoices.status','geopos_customers.name','geopos_employees.name as emp_name','geopos_invoices.refer','(DATE_FORMAT(geopos_invoices.invoiceduedate,"%d")-DATE_FORMAT(now(),"%d")) as age', null);
-    var $column_search = array('geopos_invoices.id','geopos_invoices.tid','geopos_invoices.invoicedate','geopos_invoices.invoiceduedate','geopos_invoices.total','geopos_invoices.status','geopos_customers.name','geopos_employees.name as emp_name','geopos_invoices.refer','(DATE_FORMAT(geopos_invoices.invoiceduedate,"%d")-DATE_FORMAT(now(),"%d")) as age');
+    var $column_search = array('geopos_customers.name','geopos_customers.phone_s','geopos_customers.address');
     var $order = array('geopos_invoices.tid' => 'desc');
 
     public function __construct()
@@ -212,7 +212,8 @@ class YearToDate_model extends CI_Model
     }
     private function _get_datatables_query($opt = '')
     {
-
+        $getyear = $this->input->post('start_date');
+        if($getyear ==''){ $getyear = date('Y');}else{$getyear=$this->input->post('start_date');}
         $this->db->select("geopos_invoices.id,geopos_customers.name,geopos_customers.address,geopos_customers.phone_s,geopos_invoices.csd,
         (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='01') as jan,
         (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='02') as feb,
@@ -225,12 +226,14 @@ class YearToDate_model extends CI_Model
         (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='09') as sep,
         (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='10') as oct,
         (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='11') as nov,
-        (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='12') as descb");
+        (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id AND date_format(invoicedate,'%m')='12') as descb,
+        (SELECT ifnull(SUM(total),0) FROM geopos_invoices gi WHERE gi.csd=geopos_customers.id and date_format(invoicedate,'%Y')= $getyear group by gi.csd) as total");
         $this->db->from($this->table);
         $this->db->where('geopos_invoices.i_class', 0);
         $this->db->where("date_format(geopos_invoices.invoicedate,'%Y')", date('Y'));
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
         $this->db->group_by('geopos_invoices.csd');
+        $this->db->order_by('geopos_customers.name','asc');
 
         if ($opt) {
             $this->db->where('geopos_invoices.eid', $opt);
@@ -242,8 +245,7 @@ class YearToDate_model extends CI_Model
 
         if ($this->input->post('start_date')) // if datatable send POST for search
         {
-            $this->db->where("date_format(geopos_invoices.invoicedate,'%Y')=", $this->input->post('start_date'));
-
+            $this->db->where("date_format(geopos_invoices.invoicedate,'%Y')=", $getyear);
         }
 
         $i = 0;
