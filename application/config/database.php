@@ -11,7 +11,7 @@ $query_builder = TRUE;
 $hostname ='localhost:3307';
 $username ='root';
 $password ='';
-$database ='reahou_pos';
+$database ='reahou_pos_v1';
 
 $db['default'] = array(
 	'dsn'	=> '',
