@@ -69,7 +69,7 @@ class YearToDate extends CI_Controller
             $row[] = $invoices->oct;
             $row[] = $invoices->nov;
             $row[] = $invoices->descb;
-            $row[] = '';
+            $row[] = $invoices->total;
             $data[] = $row;
         }
         $output = array(
