@@ -410,7 +410,7 @@
                 
             echo '<tr style="background-color: #000" class="item-bonus item' . $flag . '">  <td>' . $n . '</td>
                 <td style="width:14%;">'.$row['barcode'].'</td><td style="width:8%;">'.$row['product_code'].'</td>
-                <td>' . $row['product'] . '</td>
+                <td>' . $row['product'] . ' - Bonus</td>
                 <td style="width:12%;">'.$row['unit'].'</td>
                 <td style="width:4%;" class="col-right">' . +amountFormat_general($row['qty'],true) . '</td>
 		<td class="col-right"></td>';
@@ -448,6 +448,7 @@
             }
             $fill = !$fill;
             $n++;
+            $m++;
         }
             
         if ($invoice['shipping'] > 0) {

@@ -7,3 +7,8 @@ nbproject/project.xml
 application/config/config.php
 application/config/database.php
 application/cache/cache_validation
+application/config/database.php
+application/cache/cache_validation
+application/config/config.php
+application/config/database.php
+application/config/lic.php
