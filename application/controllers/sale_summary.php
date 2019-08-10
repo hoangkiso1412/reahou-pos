@@ -73,7 +73,7 @@ class Sale_summary extends CI_Controller
             $row[] = dateformat($invoices->invoiceduedate);
             $row[] = $invoices->period;
             $row[] = amountExchange($invoices->total, 0, $this->aauth->get_user()->loc);
-            $row[] = $invoices->username;
+            $row[] = $invoices->employee_name;
             $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
             $data[] = $row;
         }

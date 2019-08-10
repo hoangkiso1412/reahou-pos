@@ -391,7 +391,7 @@ function employees()
 {
     $ci =& get_instance();
     $ci->load->database();
-    $query2 = $ci->db->query("SELECT * FROM geopos_users");
+    $query2 = $ci->db->query("SELECT * FROM geopos_employees");
     return $query2->result_array();
 }
 

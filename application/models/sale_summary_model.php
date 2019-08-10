@@ -22,7 +22,7 @@ class Sale_summary_model extends CI_Model
 {
     var $table = 'geopos_invoices';
     var $column_order = array(null, 'geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total', 'geopos_invoices.status', null);
-    var $column_search = array('geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total','geopos_invoices.status','geopos_users.username','geopos_customers.phone','geopos_customers.address');
+    var $column_search = array('geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total','geopos_invoices.status','geopos_employees.name','geopos_customers.phone','geopos_customers.address');
     var $order = array('geopos_invoices.tid' => 'desc');
 
     public function __construct()
@@ -49,7 +49,7 @@ class Sale_summary_model extends CI_Model
     private function _get_datatables_query($opt = '')
     {
 
-        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name,geopos_users.username,DATE_FORMAT(geopos_invoices.invoicedate, "%Y%m") as period,geopos_customers.phone,geopos_customers.address,geopos_users.id');
+        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name,geopos_employees.name employee_name,DATE_FORMAT(geopos_invoices.invoicedate, "%Y%m") as period,geopos_customers.phone,geopos_customers.address,geopos_employees.id');
         $this->db->from($this->table);
         $this->db->where('geopos_invoices.i_class', 0);
         if ($opt) {
@@ -65,7 +65,7 @@ class Sale_summary_model extends CI_Model
 
             $this->db->where('DATE(geopos_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
             $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
-            $this->db->where('geopos_users.id = ', $this->input->post('seller'));
+            $this->db->where('geopos_employees.id = ', $this->input->post('seller'));
 
         }elseif($this->input->post('start_date') && $this->input->post('end_date')){
 
@@ -74,7 +74,7 @@ class Sale_summary_model extends CI_Model
 
         }
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
-        $this->db->join('geopos_users', 'geopos_invoices.eid = geopos_users.id', 'left');
+        $this->db->join('geopos_employees', 'geopos_invoices.eid = geopos_employees.id', 'left');
 
         $i = 0;
 
