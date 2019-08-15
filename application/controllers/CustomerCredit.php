@@ -45,6 +45,14 @@ class CustomerCredit extends CI_Controller
         $this->load->view('customers/customercredit');
         $this->load->view('fixed/footer');
     }
+    public function customer_credit_group()
+    {
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Customers Credit';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('customers/customercreditbyname');
+        $this->load->view('fixed/footer');
+    }
     public function ajax_list()
     {
         $list = $this->invocies->get_datatables($this->limited);
@@ -63,6 +71,30 @@ class CustomerCredit extends CI_Controller
             $row[] =  $invoices->age;
             $row[] =  $invoices->invoiceduedate;
             $row[] =  $invoices->emp_name;
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->invocies->count_all($this->limited),
+            "recordsFiltered" => $this->invocies->count_filtered($this->limited),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+    public function ajax_list_group()
+    {
+        $list = $this->invocies->get_datatables_group($this->limited);
+        $data = array();
+        $no = $this->input->post('start');
+        foreach ($list as $invoices) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = '<a href="' . base_url("invoices/view?id=$invoices->csd") . '">&nbsp; ' . $invoices->name . '</a>';
+            $row[] = $invoices->credit;
+            $row[] = $invoices->payment;
+            $row[] = $invoices->debit;
             $data[] = $row;
         }
         $output = array(

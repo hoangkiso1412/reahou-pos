@@ -264,10 +264,39 @@ class InvoiceCredit_model extends CI_Model
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
+    private function _get_datatables_group_query($opt = '')
+    {
+        $this->db->select('sum(geopos_invoices.total) as credit,
+                            (select sum(geopos_invoices.pamnt) from geopos_invoices where geopos_invoices.csd=geopos_customers.id) as payment,
+                            ((sum(geopos_invoices.total))-(select sum(geopos_invoices.pamnt) from geopos_invoices where geopos_invoices.csd=geopos_customers.id)) as debit,
+                            geopos_invoices.status,
+                            geopos_customers.name');
+        $this->db->from($this->table);
+        $where ='geopos_invoices.status= "due"';
+        $this->db->where($where);
+    
+        $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
+        $this->db->join('geopos_employees', 'geopos_invoices.eid=geopos_employees.id', 'left');
+        $this->db->group_by("geopos_customers.id");
+    }
 
     function get_datatables($opt = '')
     {
         $this->_get_datatables_query($opt);
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        $this->db->where('geopos_invoices.i_class', 0);
+        if ($this->aauth->get_user()->loc) {
+            $this->db->where('geopos_invoices.loc', $this->aauth->get_user()->loc);
+        }  elseif(!BDATA) { $this->db->where('geopos_invoices.loc', 0); }
+
+        return $query->result();
+    }
+
+    function get_datatables_group($opt = '')
+    {
+        $this->_get_datatables_group_query($opt);
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
