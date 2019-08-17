@@ -267,10 +267,10 @@ class InvoiceCredit_model extends CI_Model
     private function _get_datatables_group_query($opt = '')
     {
         $this->db->select('sum(geopos_invoices.total) as credit,
+        ((sum(geopos_invoices.total))-(select sum(geopos_invoices.pamnt) from geopos_invoices where geopos_invoices.csd=geopos_customers.id and geopos_invoices.status="due")) as debit,
                             (select sum(geopos_invoices.pamnt) from geopos_invoices where geopos_invoices.csd=geopos_customers.id) as payment,
-                            ((sum(geopos_invoices.total))-(select sum(geopos_invoices.pamnt) from geopos_invoices where geopos_invoices.csd=geopos_customers.id)) as debit,
                             geopos_invoices.status,
-                            geopos_customers.name');
+                            geopos_customers.name,geopos_customers.id');
         $this->db->from($this->table);
         $where ='geopos_invoices.status= "due"';
         $this->db->where($where);
@@ -390,6 +390,31 @@ class InvoiceCredit_model extends CI_Model
         if ($enable == 'Yes') {
             $this->db->where('enable', 'Yes');
         }
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    public function getAmountCredit($id)
+    {
+        $this->db->select('sum(geopos_invoices.total) as credit,
+                            ((sum(geopos_invoices.total))-(select sum(geopos_invoices.pamnt) from geopos_invoices where geopos_invoices.csd=geopos_customers.id and geopos_invoices.status="due")) as debit,
+                            (select sum(geopos_invoices.pamnt) from geopos_invoices where geopos_invoices.csd=geopos_customers.id) as payment,
+                            geopos_invoices.status,
+                            geopos_customers.name,geopos_customers.id');
+        $this->db->from($this->table);
+        $where ='geopos_invoices.status= "due" and geopos_invoices.csd='.$id;
+        $this->db->where($where);
+    
+        $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
+        $this->db->join('geopos_employees', 'geopos_invoices.eid=geopos_employees.id', 'left');
+        $this->db->group_by("geopos_customers.id");
+
+        if ($this->aauth->get_user()->loc) {
+            $this->db->where('loc', $this->aauth->get_user()->loc);
+           if(BDATA) $this->db->or_where('loc', 0);
+        }else{
+             if(!BDATA) $this->db->where('loc', 0);
+        }
+
         $query = $this->db->get();
         return $query->result_array();
     }

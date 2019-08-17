@@ -134,5 +134,4 @@ class Accounts_model extends CI_Model
         echo json_encode(array(0 => array('balance' => amountExchange($result['balance'], 0, $this->aauth->get_user()->loc), 'count_a' => $result['count_a'])));
 
     }
-
 }
