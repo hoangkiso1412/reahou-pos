@@ -50,7 +50,18 @@ class CustomerCredit extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Customers Credit';
         $this->load->view('fixed/header', $head);
-        $this->load->view('customers/customercreditbyname');
+        $this->load->view('customers/customercreditbyname',$data);
+        $this->load->view('fixed/footer');
+    }
+    public function viewpayment(){
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Customers Payment';
+        $this->load->model('accounts_model');
+        $id = $this->input->get('id');
+        $data['totalcredit']=$this->invocies->getAmountCredit($id);
+        $data['acclist'] = $this->accounts_model->accountslist((integer)$this->aauth->get_user()->loc);
+        $this->load->view('fixed/header', $head);
+        $this->load->view('customers/payment_amount',$data);
         $this->load->view('fixed/footer');
     }
     public function ajax_list()
@@ -91,19 +102,92 @@ class CustomerCredit extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = '<a href="' . base_url("invoices/view?id=$invoices->csd") . '">&nbsp; ' . $invoices->name . '</a>';
-            $row[] = $invoices->credit;
+            $row[] = '<a href="' . base_url("customercredit/viewpayment?id=$invoices->id") . '">&nbsp; ' . $invoices->name . '</a>';
             $row[] = $invoices->payment;
             $row[] = $invoices->debit;
+            $row[] = '<a href="' . base_url("customercredit/viewpayment?id=$invoices->id") . '">&nbsp; ' . 'Pay'. '</a>';
             $data[] = $row;
         }
         $output = array(
-            "draw" => $this->input->post('draw'),
-            "recordsTotal" => $this->invocies->count_all($this->limited),
+            "draw"            => $this->input->post('draw'),
+            "recordsTotal"    => $this->invocies->count_all($this->limited),
             "recordsFiltered" => $this->invocies->count_filtered($this->limited),
-            "data" => $data,
+            "data"            => $data,
         );
         //output to json format
         echo json_encode($output);
+    }
+    public function pay(){
+        if (!$this->aauth->premission(1)) {
+
+            exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
+
+        }
+        $this->load->model("base_model");
+        $amount2 = 0;
+        $tid    = $this->input->get('tid',true);
+        $amount = $this->input->get('amount_pay', true);
+        $paydate = $this->input->get('paydate', true);
+        $note = $this->input->get('shortnote', true);
+        $pmethod = $this->input->get('pmethod', true);
+        $acid = $this->input->get('account', true);
+        $cid = $this->input->get('cid', true);
+        $cname = $this->input->get('cname', true);
+        $paydate = datefordatabase($paydate);
+
+        $data = array(
+            'acid' => $acid,
+            'account' => $account['holder'],
+            'type' => 'Income',
+            'cat' => 'Sales',
+            'credit' => $amount,
+            'payer' => $cname,
+            'payerid' => $cid,
+            'method' => $pmethod,
+            'date' => $paydate,
+            'eid' => $this->aauth->get_user()->id,
+            'tid' => $tid,
+            'note' => $note,
+            'loc' => $this->aauth->get_user()->loc
+        );
+
+        $this->db->insert('geopos_transactions', $data);
+
+
+        $query=$this->base_model->get_value_byQuery("select count(geopos_invoices.csd) as length from geopos_invoices where geopos_invoices.status='due' and geopos_invoices.csd=".$cid,"length");
+        $invoice_data=$this->base_model->select("select id from geopos_invoices",array("csd" => $cid,"status"=>"due"));
+        $id=array();
+        foreach($invoice_data as $row){
+            $id[] = $row->id;
+        }
+        echo "query:".$query."<br/>";
+        for($i=0;$i<4;$i++){
+            echo "update:".$i."</br>";
+            $creditamount=$this->base_model->get_value_byQuery("select pamnt as credit from geopos_invoices where geopos_invoices.status='due' and geopos_invoices.csd=".$cid." and id=".$id[$i],"credit");
+            echo "credit amount".$creditamount."<br/>";
+            $dueamount=$this->base_model->get_value_byQuery("select (total-pamnt) as credit from geopos_invoices where geopos_invoices.status='due' and geopos_invoices.csd=".$cid." and id=".$id[$i],"credit");
+            echo "due amount".$dueamount."<br/>";
+            if($amount>=$dueamount) {
+                echo "con1"."<br/>";
+                $dataInvoice = array(
+                    'status' => 'paid',
+                    'pamnt'  => $creditamount+$dueamount
+                    //'pamnt'  => $i
+                );
+                $this->base_model->update('geopos_invoices', $dataInvoice, array("csd" => $cid,"id"=>$id[$i],"status" => "due"));
+                $amount=$amount-$dueamount;
+            }else{
+                echo "con2"."<br/>";
+                $creditamount=$this->base_model->get_value_byQuery("select pamnt as credit from geopos_invoices where geopos_invoices.status='due' and geopos_invoices.csd=".$cid." and id=".$id[$i],"credit");
+                $dataInvoice = array(
+                    'pamnt'  => $amount + $creditamount
+                );
+                $this->base_model->update('geopos_invoices', $dataInvoice, array("csd" => $cid,"id"=>$id[$i],"status" => "due"));
+                redirect(site_url("customercredit/customer_credit_group"));
+                exit();
+            }  
+        }
+        // echo json_encode(array('status' => 'Success', 'message' =>
+        // $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => amountExchange_s($amount, 0, $this->aauth->get_user()->loc)));
     }
 }

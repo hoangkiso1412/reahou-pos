@@ -18,14 +18,15 @@
                 <div class="message"></div>
             </div>
             <div class="card-body">
+
                 <table id="invoices" class="table table-striped table-bordered zero-configuration ">
                     <thead>
                     <tr>
                         <th><?php echo $this->lang->line('No') ?></th>
                         <th><?php echo "Account Name"//echo $this->lang->line('Customer') ?></th>
-                        <th><?php echo $this->lang->line('Amount') ?></th>
                         <th><?php echo "Paid"//$this->lang->line('Amount') ?></th>
-                        <th><?php echo "Debit" ?></th>
+                        <th><?php echo "Credit"//$this->lang->line('Amount') ?></th>
+                        <th><?php echo "Payment" ?></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -34,9 +35,9 @@
                     <tr>
                         <th><?php echo $this->lang->line('No') ?></th>
                         <th><?php echo "Account Name"//echo $this->lang->line('Customer') ?></th>
-                        <th><?php echo $this->lang->line('Amount') ?></th>
                         <th><?php echo "Paid"//$this->lang->line('Amount') ?></th>
-                        <th><?php echo "Debit" ?></th>
+                        <th><?php echo "Credit"//$this->lang->line('Amount') ?></th>
+                        <th><?php echo "Payment" ?></td>
                     </tr>
                     </tfoot>
                 </table>
@@ -44,8 +45,6 @@
         </div>
     </div>
 </div>
-
-
 <div id="delete_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
