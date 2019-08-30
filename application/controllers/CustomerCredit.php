@@ -155,13 +155,13 @@ class CustomerCredit extends CI_Controller
 
 
         $query=$this->base_model->get_value_byQuery("select count(geopos_invoices.csd) as length from geopos_invoices where geopos_invoices.status='due' and geopos_invoices.csd=".$cid,"length");
-        $invoice_data=$this->base_model->select("select id from geopos_invoices",array("csd" => $cid,"status"=>"due"));
+        $invoice_data=$this->base_model->select("select id from geopos_invoices where csd=? and status=?",array("csd" => $cid,"status"=>"due"));
         $id=array();
         foreach($invoice_data as $row){
             $id[] = $row->id;
         }
         echo "query:".$query."<br/>";
-        for($i=0;$i<4;$i++){
+        for($i=0;$i<$query;$i++){
             echo "update:".$i."</br>";
             $creditamount=$this->base_model->get_value_byQuery("select pamnt as credit from geopos_invoices where geopos_invoices.status='due' and geopos_invoices.csd=".$cid." and id=".$id[$i],"credit");
             echo "credit amount".$creditamount."<br/>";
@@ -187,6 +187,8 @@ class CustomerCredit extends CI_Controller
                 exit();
             }  
         }
+        redirect(site_url("customercredit/customer_credit_group"));
+            exit();
         // echo json_encode(array('status' => 'Success', 'message' =>
         // $this->lang->line('Transaction has been added'), 'pstatus' => $this->lang->line($status), 'activity' => $activitym, 'amt' => $totalrm, 'ttlpaid' => amountExchange_s($amount, 0, $this->aauth->get_user()->loc)));
     }
