@@ -244,7 +244,10 @@ $e_id = $this->aauth->get_user()->id;
                                 } ?>
                                 <tr class="last-item-row sub_c">
                                     <td class="add-row">
-                                        <button type="button" class="btn btn-success" id="addproduct">
+                                        <button type="button" class="btn btn-success" 
+                                                    product-rate='<?php echo trim($rate_input) ?>' 
+                                                    tax-rate='<?php echo trim($tax_input) ?>' 
+                                                    discount-rate='<?php echo trim($discount_input) ?>' id="addproduct">
                                             <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
                                         </button>
                                     </td>

@@ -217,7 +217,7 @@ $e_id = $this->aauth->get_user()->id;
                             </thead>
                             <tbody>
                             <tr>
-                                <td><input type="text" class="form-control text-center" name="product_name[]"
+                                <td><input type="text" class="form-control" name="product_name[]"
                                            placeholder="<?php echo $this->lang->line('Enter Product name') ?>"
                                            id='productname-0'>
                                 </td>
@@ -262,6 +262,9 @@ $e_id = $this->aauth->get_user()->id;
                             <tr class="last-item-row">
                                 <td class="add-row">
                                     <button type="button" class="btn btn-success" aria-label="Left Align"
+											tax-rate='<?php echo trim($tax_input) ?>' 
+                                            discount-rate='<?php echo trim($discount_input) ?>' 
+											 product-rate='<?php echo trim($rate_input) ?>' 
                                             id="addproduct">
                                         <i class="fa fa-plus-square"></i> <?php echo $this->lang->line('Add Row') ?>
                                     </button>
