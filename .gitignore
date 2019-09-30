@@ -18,3 +18,8 @@ application/config/config.php
 application/config/database.php
 application/config/lic.php
 system/core/Loader.php
+application/cache/cache_validation
+application/config/config.php
+application/config/database.php
+application/config/lic.php
+system/core/Loader.php
