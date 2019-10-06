@@ -584,8 +584,8 @@ FROM geopos_products $whr");
                     $product_name = $pr2['product_name'];
                     $this->db->delete('geopos_movers', array('d_type' => 1, 'rid1' => $row));
 
-                    $this->movers(1, $row, $qty, 0, 'Stock Transferred & Initialized W- ' . $to_warehouse_name);
-                    $this->aauth->applog("[Product Transfer] -$product_name  -Qty-$qty W- $to_warehouse_name PID " . $pr2['pid'], $this->aauth->get_user()->username);
+                    $this->movers(1, $row, $qty, 0, 'Stock Transferred & Initialized W- to ' . $to_warehouse_name);
+                    $this->aauth->applog("[Product Transfer] -$product_name  -Qty-$qty W- from $from_warehouse_name to $to_warehouse_name PID " . $pr2['pid'], $this->aauth->get_user()->username);
                 }
 
 
@@ -635,22 +635,22 @@ FROM geopos_products $whr");
                     $this->db->where('pid', $c_pid);
                     $this->db->update('geopos_products');
 
-                    $this->movers(1, $c_pid, $qty, 0, 'Stock Transferred W ' . $to_warehouse_name);
-                    $this->aauth->applog("[Product Transfer] -$product_name  -Qty-$qty W $to_warehouse_name  ID " . $c_pid, $this->aauth->get_user()->username);
+                    $this->movers(1, $c_pid, $qty, 0, 'Stock Transferred W to ' . $to_warehouse_name);
+                    $this->aauth->applog("[Product Transfer] -$product_name  -Qty-$qty W from $from_warehouse_name to $to_warehouse_name  ID " . $c_pid, $this->aauth->get_user()->username);
 
 
                 } else {
                     $this->db->insert('geopos_products', $data);
                     $pid = $this->db->insert_id();
-                    $this->movers(1, $pid, $qty, 0, 'Stock Transferred & Initialized W ' . $to_warehouse_name);
-                    $this->aauth->applog("[Product Transfer] -$product_name  -Qty-$qty  W $to_warehouse_name ID " . $pr2['pid'], $this->aauth->get_user()->username);
+                    $this->movers(1, $pid, $qty, 0, 'Stock Transferred & Initialized W to' . $to_warehouse_name);
+                    $this->aauth->applog("[Product Transfer] -$product_name  -Qty-$qty  W from $from_warehouse_name to $to_warehouse_name ID " . $pr2['pid'], $this->aauth->get_user()->username);
 
                 }
 
                 $this->db->set('qty', "qty-$qty", FALSE);
                 $this->db->where('pid', $row);
                 $this->db->update('geopos_products');
-                $this->movers(1, $row, -$qty, 0, 'Stock Transferred WID ' . $to_warehouse_name);
+                $this->movers(1, $row, -$qty, 0, 'Stock Transferred WID ' . $from_warehouse_name);
             }
 
 
