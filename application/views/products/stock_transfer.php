@@ -81,6 +81,7 @@
                                 }
                                 ?>
                             </select>
+							<label id="stock_msg" style="color:red"></label>
 
 
                         </div>
@@ -137,5 +138,15 @@
                 }
             });
         });
+		$('[name="from_warehouse"], [name="to_warehouse"]').on('change', function () {
+			if ($('[name="from_warehouse"]').val() == $('[name="to_warehouse"]').val()) {
+				$("#submit-data").attr('disabled','disabled');
+				$("#stock_msg").html("Please select different warehouse to transfer!");
+			}
+			else {
+				$("#submit-data").removeAttr('disabled');
+				$("#stock_msg").html("")
+			}
+		});
     </script>
 
